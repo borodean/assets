@@ -1,0 +1,11 @@
+{
+  "name": "asset-resolver",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "eslint . && ava"
+  },
+  "devDependencies": {
+    "ava": "^0.6.1",
+    "eslint": "^1.10.1"
+  }
+}
