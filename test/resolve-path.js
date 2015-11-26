@@ -2,20 +2,13 @@ var path = require('path');
 var resolvePath = require('../lib/resolve-path');
 var test = require('ava');
 
-test('resolves from the current working directory', function (t) {
+test('no options', function (t) {
   return resolvePath('fixtures/images/picture.png').then(function (resolvedPath) {
     t.is(resolvedPath, path.resolve('fixtures/images/picture.png'));
   }, t.fail);
 });
 
-test('rejects when resolving non-exisiting file', function (t) {
-  return resolvePath('not-found.gif').then(t.fail, function (err) {
-    t.ok(err instanceof Error);
-    t.is(err.message, 'Asset not found or unreadable: not-found.gif');
-  });
-});
-
-test('resolves from the base path', function (t) {
+test('basePath', function (t) {
   return resolvePath('picture.png', {
     basePath: 'fixtures/images'
   }).then(function (resolvedPath) {
@@ -23,7 +16,7 @@ test('resolves from the base path', function (t) {
   }, t.fail);
 });
 
-test('resolves from the load path', function (t) {
+test('loadPaths', function (t) {
   return resolvePath('empty-sans.woff', {
     loadPaths: ['fixtures/fonts', 'fixtures/images']
   }).then(function (resolvedPath) {
@@ -31,7 +24,7 @@ test('resolves from the load path', function (t) {
   }, t.fail);
 });
 
-test('resolves from the base path and load path combo', function (t) {
+test('basePath + loadPaths', function (t) {
   return resolvePath('empty-sans.woff', {
     basePath: 'fixtures',
     loadPaths: ['fonts', 'images']
@@ -40,7 +33,14 @@ test('resolves from the base path and load path combo', function (t) {
   }, t.fail);
 });
 
-test('prioritizes the base path over the load path', function (t) {
+test('non-existing file', function (t) {
+  return resolvePath('non-existing.gif').then(t.fail, function (err) {
+    t.ok(err instanceof Error);
+    t.is(err.message, 'Asset not found or unreadable: non-existing.gif');
+  });
+});
+
+test('prioritizes basePath over the loadPaths', function (t) {
   return resolvePath('duplicate-1.jpg', {
     basePath: 'fixtures',
     loadPaths: ['fonts', 'images']
@@ -49,7 +49,7 @@ test('prioritizes the base path over the load path', function (t) {
   }, t.fail);
 });
 
-test('prioritizes the load paths by their order', function (t) {
+test('prioritizes firsts loadPaths over the lasts', function (t) {
   return resolvePath('duplicate-2.txt', {
     basePath: 'fixtures',
     loadPaths: ['fonts', 'images']
@@ -58,16 +58,16 @@ test('prioritizes the load paths by their order', function (t) {
   }, t.fail);
 });
 
-test('accepts node-style callback', function (t) {
+test('node-style callback', function (t) {
   t.plan(5);
 
   resolvePath('fixtures/images/picture.png', function (err, resolvedPath) {
     t.is(resolvedPath, path.resolve('fixtures/images/picture.png'));
   });
 
-  resolvePath('not-found.gif', function (err, resolvedPath) {
+  resolvePath('non-existing.gif', function (err, resolvedPath) {
     t.ok(err instanceof Error);
-    t.is(err.message, 'Asset not found or unreadable: not-found.gif');
+    t.is(err.message, 'Asset not found or unreadable: non-existing.gif');
     t.is(resolvedPath, undefined);
   });
 
