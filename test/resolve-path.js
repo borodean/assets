@@ -47,7 +47,7 @@ test('resolves from the base path', function (t) {
   }, t.fail);
 });
 
-test('resolves from the load path 1', function (t) {
+test('resolves from the load path', function (t) {
   return resolvePath('pt-sans.woff', {
     loadPaths: ['assets/fonts', 'assets/images']
   }).then(function (resolvedPath) {
@@ -55,15 +55,7 @@ test('resolves from the load path 1', function (t) {
   }, t.fail);
 });
 
-test('resolves from the load path 2', function (t) {
-  return resolvePath('picture.png', {
-    loadPaths: ['assets/fonts', 'assets/images']
-  }).then(function (resolvedPath) {
-    t.is(resolvedPath, path.resolve('assets/images/picture.png'));
-  }, t.fail);
-});
-
-test('resolves from both base path and load path', function (t) {
+test('resolves from the base path and load path combo', function (t) {
   return resolvePath('pt-sans.woff', {
     basePath: 'assets',
     loadPaths: ['fonts', 'images']
