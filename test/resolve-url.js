@@ -1,5 +1,11 @@
+var fs = require('fs');
 var resolveUrl = require('../lib/resolve-url');
 var test = require('ava');
+
+function mtime(filePath, mtime) {
+  var atime = fs.statSync(filePath).atime;
+  fs.utimesSync(filePath, atime, mtime);
+}
 
 test('no options', function (t) {
   return resolveUrl('fixtures/duplicate-1.jpg')
@@ -166,10 +172,30 @@ test('baseUrl w/ trailing slash', function (t) {
     }, t.fail);
 });
 
+test('default cachebuster', function (t) {
+  mtime('fixtures/images/picture.png', new Date(1991, 7, 24));
+  return resolveUrl('fixtures/images/picture.png', {
+    cachebuster: true
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '/fixtures/images/picture.png?9f04da1080');
+    }, t.fail);
+});
+
 test('query + hash', function (t) {
   return resolveUrl('fixtures/images/picture.png?foo=bar&baz#hash')
     .then(function (resolvedUrl) {
       t.is(resolvedUrl, '/fixtures/images/picture.png?foo=bar&baz#hash');
+    }, t.fail);
+});
+
+test('query + hash w/ cachebuster', function (t) {
+  mtime('fixtures/images/picture.png', new Date(1991, 7, 24));
+  return resolveUrl('fixtures/images/picture.png?foo=bar&baz#hash', {
+    cachebuster: true
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '/fixtures/images/picture.png?foo=bar&baz&9f04da1080#hash');
     }, t.fail);
 });
 
