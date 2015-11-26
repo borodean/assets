@@ -6,6 +6,7 @@
   "rules": {
     "indent": [2, 2],
     "linebreak-style": [2, "unix"],
+    "no-console": [0],
     "quotes": [2, "single"],
     "semi": [2, "always"],
     "space-before-blocks": [2, "always"],
