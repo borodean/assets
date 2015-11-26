@@ -98,6 +98,23 @@ test('resolves from the base URL, base path and load path combo', function (t) {
   }, t.fail);
 });
 
+test('resolves to a relative URL', function (t) {
+  return resolveUrl('assets/images/picture.png', {
+    relativeTo: 'assets/fonts'
+  }).then(function (resolvedUrl) {
+    t.is(resolvedUrl, '../images/picture.png');
+  }, t.fail);
+});
+
+test('resolves to a relative URL from the base path', function (t) {
+  return resolveUrl('images/picture.png', {
+    basePath: 'assets',
+    relativeTo: 'fonts'
+  }).then(function (resolvedUrl) {
+    t.is(resolvedUrl, '../images/picture.png');
+  }, t.fail);
+});
+
 test('accepts node-style callback', function (t) {
   t.plan(5);
 
