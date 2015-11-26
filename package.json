@@ -4,6 +4,9 @@
   "scripts": {
     "test": "eslint . && ava"
   },
+  "dependencies": {
+    "lodash": "^3.10.1"
+  },
   "devDependencies": {
     "ava": "^0.6.1",
     "eslint": "^1.10.1"
