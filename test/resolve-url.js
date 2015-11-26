@@ -115,6 +115,22 @@ test('resolves to a relative URL from the base path', function (t) {
   }, t.fail);
 });
 
+test('resolves keeping query parameters and hash', function (t) {
+  return resolveUrl('images/picture.png?foo=bar&baz#hash', {
+    basePath: 'assets'
+  }).then(function (resolvedUrl) {
+    t.is(resolvedUrl, '/images/picture.png?foo=bar&baz#hash');
+  }, t.fail);
+});
+
+test('resolves to a relative URL keeping query parameters and hash', function (t) {
+  return resolveUrl('assets/images/picture.png?foo=bar&baz#hash', {
+    relativeTo: 'assets/fonts'
+  }).then(function (resolvedUrl) {
+    t.is(resolvedUrl, '../images/picture.png?foo=bar&baz#hash');
+  }, t.fail);
+});
+
 test('accepts node-style callback', function (t) {
   t.plan(5);
 
