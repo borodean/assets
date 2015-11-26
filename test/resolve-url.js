@@ -189,9 +189,9 @@ test('node-style callback', function (t) {
     t.is(resolvedUrl, '/fixtures/images/picture.png');
   });
 
-  resolveUrl('not-found.gif', function (err, resolvedUrl) {
+  resolveUrl('non-existing.gif', function (err, resolvedUrl) {
     t.ok(err instanceof Error);
-    t.is(err.message, 'Asset not found or unreadable: not-found.gif');
+    t.is(err.message, 'Asset not found or unreadable: non-existing.gif');
     t.is(resolvedUrl, undefined);
   });
 
