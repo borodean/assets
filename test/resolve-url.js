@@ -173,12 +173,12 @@ test('baseUrl w/ trailing slash', function (t) {
 });
 
 test('default cachebuster', function (t) {
-  mtime('fixtures/images/picture.png', new Date(1991, 7, 24));
+  mtime('fixtures/images/picture.png', Date.UTC(1991, 7, 24));
   return resolveUrl('fixtures/images/picture.png', {
     cachebuster: true
   })
     .then(function (resolvedUrl) {
-      t.is(resolvedUrl, '/fixtures/images/picture.png?9f04da1080');
+      t.is(resolvedUrl, '/fixtures/images/picture.png?26d2d778b6000');
     }, t.fail);
 });
 
@@ -190,12 +190,12 @@ test('query + hash', function (t) {
 });
 
 test('query + hash w/ cachebuster', function (t) {
-  mtime('fixtures/images/picture.png', new Date(1991, 7, 24));
+  mtime('fixtures/images/picture.png', Date.UTC(1991, 7, 24));
   return resolveUrl('fixtures/images/picture.png?foo=bar&baz#hash', {
     cachebuster: true
   })
     .then(function (resolvedUrl) {
-      t.is(resolvedUrl, '/fixtures/images/picture.png?foo=bar&baz&9f04da1080#hash');
+      t.is(resolvedUrl, '/fixtures/images/picture.png?foo=bar&baz&26d2d778b6000#hash');
     }, t.fail);
 });
 
