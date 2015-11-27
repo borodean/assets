@@ -3,18 +3,18 @@ var sinon = require('sinon');
 var test = require('ava');
 
 test.before(function (t) {
-  sinon.stub(AssetResolver, 'measure');
-  sinon.stub(AssetResolver, 'resolveDataUrl');
-  sinon.stub(AssetResolver, 'resolvePath');
-  sinon.stub(AssetResolver, 'resolveUrl');
+  sinon.stub(AssetResolver, 'data');
+  sinon.stub(AssetResolver, 'path');
+  sinon.stub(AssetResolver, 'size');
+  sinon.stub(AssetResolver, 'url');
   t.end();
 });
 
 test.after(function (t) {
-  AssetResolver.measure.restore();
-  AssetResolver.resolveDataUrl.restore();
-  AssetResolver.resolvePath.restore();
-  AssetResolver.resolveUrl.restore();
+  AssetResolver.data.restore();
+  AssetResolver.path.restore();
+  AssetResolver.size.restore();
+  AssetResolver.url.restore();
   t.end();
 });
 
@@ -33,26 +33,26 @@ test('AssetResolver.options', function (t) {
   t.end();
 });
 
-test('AssetResolver.measure()', function (t) {
-  AssetResolver().measure();
-  t.ok(AssetResolver.measure.called);
+test('AssetResolver.data()', function (t) {
+  AssetResolver().data();
+  t.ok(AssetResolver.data.called);
   t.end();
 });
 
-test('AssetResolver.resolveDataUrl()', function (t) {
-  AssetResolver().resolveDataUrl();
-  t.ok(AssetResolver.resolveDataUrl.called);
+test('AssetResolver.path()', function (t) {
+  AssetResolver().path();
+  t.ok(AssetResolver.path.called);
   t.end();
 });
 
-test('AssetResolver.resolvePath()', function (t) {
-  AssetResolver().resolvePath();
-  t.ok(AssetResolver.resolvePath.called);
+test('AssetResolver.size()', function (t) {
+  AssetResolver().size();
+  t.ok(AssetResolver.size.called);
   t.end();
 });
 
-test('AssetResolver.resolveUrl()', function (t) {
-  AssetResolver().resolveUrl();
-  t.ok(AssetResolver.resolveUrl.called);
+test('AssetResolver.url()', function (t) {
+  AssetResolver().url();
+  t.ok(AssetResolver.url.called);
   t.end();
 });

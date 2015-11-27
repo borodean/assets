@@ -1,5 +1,5 @@
 var path = require('path');
-var resolvePath = require('../lib/resolve-path');
+var resolvePath = require('../lib/path');
 var test = require('ava');
 
 test('no options', function (t) {

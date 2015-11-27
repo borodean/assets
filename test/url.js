@@ -1,6 +1,6 @@
 var fs = require('fs');
 var path = require('path');
-var resolveUrl = require('../lib/resolve-url');
+var resolveUrl = require('../lib/url');
 var test = require('ava');
 
 function mtime(filePath, mtime) {

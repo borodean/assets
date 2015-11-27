@@ -1,16 +1,16 @@
-var measure = require('../lib/measure');
+var resolveSize = require('../lib/size');
 var path = require('path');
 var test = require('ava');
 
 test('no options', function (t) {
-  return measure('fixtures/duplicate-1.jpg')
+  return resolveSize('fixtures/duplicate-1.jpg')
     .then(function (size) {
       t.same(size, { width: 200, height: 114 });
     }, t.fail);
 });
 
 test('with options', function (t) {
-  return measure('picture.png', {
+  return resolveSize('picture.png', {
     basePath: 'fixtures',
     loadPaths: ['fonts', 'images']
   })
@@ -20,7 +20,7 @@ test('with options', function (t) {
 });
 
 test('non-existing file', function (t) {
-  return measure('non-existing.gif')
+  return resolveSize('non-existing.gif')
     .then(t.fail, function (err) {
       t.ok(err instanceof Error);
       t.is(err.message, 'Asset not found or unreadable: non-existing.gif');
@@ -28,7 +28,7 @@ test('non-existing file', function (t) {
 });
 
 test('nonsupported file', function (t) {
-  return measure('fixtures/fonts/empty-sans.woff')
+  return resolveSize('fixtures/fonts/empty-sans.woff')
     .then(t.fail, function (err) {
       t.ok(err instanceof Error);
       t.is(err.message, 'File type not supported: ' + path.resolve('fixtures/fonts/empty-sans.woff'));
@@ -36,7 +36,7 @@ test('nonsupported file', function (t) {
 });
 
 test('corrupted file', function (t) {
-  return measure('fixtures/corrupt.jpg')
+  return resolveSize('fixtures/corrupt.jpg')
     .then(t.fail, function (err) {
       t.ok(err instanceof Error);
       t.is(err.message, 'Invalid JPEG file: ' + path.resolve('fixtures/corrupt.jpg'));
@@ -46,17 +46,17 @@ test('corrupted file', function (t) {
 test('node-style callback', function (t) {
   t.plan(5);
 
-  measure('fixtures/duplicate-1.jpg', function (err, size) {
+  resolveSize('fixtures/duplicate-1.jpg', function (err, size) {
     t.same(size, { width: 200, height: 114 });
   });
 
-  measure('non-existing.gif', function (err, size) {
+  resolveSize('non-existing.gif', function (err, size) {
     t.ok(err instanceof Error);
     t.is(err.message, 'Asset not found or unreadable: non-existing.gif');
     t.is(size, undefined);
   });
 
-  measure('picture.png', {
+  resolveSize('picture.png', {
     basePath: 'fixtures',
     loadPaths: ['fonts', 'images']
   }, function (err, size) {

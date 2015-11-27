@@ -1,15 +1,15 @@
-var resolveDataUrl = require('../lib/resolve-data-url');
+var resolveData = require('../lib/data');
 var test = require('ava');
 
 test('no options', function (t) {
-  return resolveDataUrl('fixtures/duplicate-1.jpg')
+  return resolveData('fixtures/duplicate-1.jpg')
     .then(function (resolvedDataUrl) {
       t.is(resolvedDataUrl.slice(0, 32), 'data:image/jpeg;base64,/9j/4AAQS');
     }, t.fail);
 });
 
 test('with options', function (t) {
-  return resolveDataUrl('picture.png', {
+  return resolveData('picture.png', {
     basePath: 'fixtures',
     loadPaths: ['fonts', 'images']
   })
@@ -19,7 +19,7 @@ test('with options', function (t) {
 });
 
 test('remove query + preserve hash', function (t) {
-  return resolveDataUrl('fixtures/duplicate-1.jpg?foo=bar#hash')
+  return resolveData('fixtures/duplicate-1.jpg?foo=bar#hash')
     .then(function (resolvedDataUrl) {
       t.is(resolvedDataUrl.slice(0, 32), 'data:image/jpeg;base64,/9j/4AAQS');
       t.is(resolvedDataUrl.slice(-32), 'rSpUIsvhA1vsPh/WlSpVprP/9k=#hash');
@@ -27,7 +27,7 @@ test('remove query + preserve hash', function (t) {
 });
 
 test('non-existing file', function (t) {
-  return resolveDataUrl('non-existing.gif')
+  return resolveData('non-existing.gif')
     .then(t.fail, function (err) {
       t.ok(err instanceof Error);
       t.is(err.message, 'Asset not found or unreadable: non-existing.gif');
@@ -37,17 +37,17 @@ test('non-existing file', function (t) {
 test('node-style callback', function (t) {
   t.plan(5);
 
-  resolveDataUrl('fixtures/duplicate-1.jpg', function (err, resolvedDataUrl) {
+  resolveData('fixtures/duplicate-1.jpg', function (err, resolvedDataUrl) {
     t.is(resolvedDataUrl.slice(0, 32), 'data:image/jpeg;base64,/9j/4AAQS');
   });
 
-  resolveDataUrl('non-existing.gif', function (err, resolvedDataUrl) {
+  resolveData('non-existing.gif', function (err, resolvedDataUrl) {
     t.ok(err instanceof Error);
     t.is(err.message, 'Asset not found or unreadable: non-existing.gif');
     t.is(resolvedDataUrl, undefined);
   });
 
-  resolveDataUrl('picture.png', {
+  resolveData('picture.png', {
     basePath: 'fixtures',
     loadPaths: ['fonts', 'images']
   }, function (err, resolvedDataUrl) {
