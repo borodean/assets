@@ -1,6 +1,7 @@
 {
   "name": "asset-resolver",
   "version": "1.0.0",
+  "main": "./lib",
   "scripts": {
     "test": "eslint --ignore-path .gitignore . && nyc --reporter=text --reporter=html ava"
   },

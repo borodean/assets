@@ -1,4 +1,4 @@
-var AssetResolver = require('../lib/asset-resolver');
+var AssetResolver = require('..');
 var test = require('ava');
 
 test('AssetResolver', function (t) {
