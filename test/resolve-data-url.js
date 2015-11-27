@@ -18,6 +18,15 @@ test('with options', function (t) {
     }, t.fail);
 });
 
+test('remove query + preserve hash', function (t) {
+  // return resolveDataUrl('fixtures/duplicate-1.jpg?foo=bar&baz#hash')
+  return resolveDataUrl('fixtures/duplicate-1.jpg?foo=bar#hash')
+    .then(function (resolvedDataUrl) {
+      t.is(resolvedDataUrl.slice(0, 32), 'data:image/jpeg;base64,/9j/4AAQS');
+      t.is(resolvedDataUrl.slice(-32), 'rSpUIsvhA1vsPh/WlSpVprP/9k=#hash');
+    }, t.fail);
+});
+
 test('non-existing file', function (t) {
   return resolveDataUrl('non-existing.gif')
     .then(t.fail, function (err) {
