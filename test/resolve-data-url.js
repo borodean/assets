@@ -19,7 +19,6 @@ test('with options', function (t) {
 });
 
 test('remove query + preserve hash', function (t) {
-  // return resolveDataUrl('fixtures/duplicate-1.jpg?foo=bar&baz#hash')
   return resolveDataUrl('fixtures/duplicate-1.jpg?foo=bar#hash')
     .then(function (resolvedDataUrl) {
       t.is(resolvedDataUrl.slice(0, 32), 'data:image/jpeg;base64,/9j/4AAQS');
