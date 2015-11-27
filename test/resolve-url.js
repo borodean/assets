@@ -1,4 +1,5 @@
 var fs = require('fs');
+var path = require('path');
 var resolveUrl = require('../lib/resolve-url');
 var test = require('ava');
 
@@ -182,6 +183,65 @@ test('default cachebuster', function (t) {
     }, t.fail);
 });
 
+test('custom cachebuster w/ falsy result', function (t) {
+  return resolveUrl('fixtures/images/picture.png', {
+    cachebuster: function () { return; }
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '/fixtures/images/picture.png');
+    }, t.fail);
+});
+
+test('custom cachebuster w/ string result', function (t) {
+  return resolveUrl('fixtures/images/picture.png', {
+    cachebuster: function () { return 'bust'; }
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '/fixtures/images/picture.png?bust');
+    }, t.fail);
+});
+
+test('custom cachebuster w/ pathname', function (t) {
+  return resolveUrl('fixtures/images/picture.png', {
+    cachebuster: function () { return { pathname: '/foo.png' }; } // TODO leading slash
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '/foo.png');
+    }, t.fail);
+});
+
+test('custom cachebuster w/ query', function (t) {
+  return resolveUrl('fixtures/images/picture.png', {
+    cachebuster: function () { return { query: 'bust' }; }
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '/fixtures/images/picture.png?bust');
+    }, t.fail);
+});
+
+test('custom cachebuster w/ pathname + query', function (t) {
+  return resolveUrl('fixtures/images/picture.png', {
+    cachebuster: function () { return { pathname: '/foo.png', query: 'bust' }; } // TODO leading slash
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '/foo.png?bust');
+    }, t.fail);
+});
+
+test('custom cachebuster arguments', function (t) {
+  resolveUrl('images/picture.png', {
+    basePath: 'fixtures',
+    cachebuster: function (resolvedPath, resolvedUrlPathname) {
+      t.is(resolvedPath, path.resolve('fixtures/images/picture.png'));
+      t.is(resolvedUrlPathname, path.resolve('/images/picture.png'));
+      t.end();
+    }
+  }).catch(function () {
+    t.fail();
+    t.end();
+  });
+});
+
 test('query + hash', function (t) {
   return resolveUrl('fixtures/images/picture.png?foo=bar&baz#hash')
     .then(function (resolvedUrl) {
@@ -189,13 +249,58 @@ test('query + hash', function (t) {
     }, t.fail);
 });
 
-test('query + hash w/ cachebuster', function (t) {
+test('query + hash w/ default cachebuster', function (t) {
   mtime('fixtures/images/picture.png', Date.UTC(1991, 7, 24));
   return resolveUrl('fixtures/images/picture.png?foo=bar&baz#hash', {
     cachebuster: true
   })
     .then(function (resolvedUrl) {
       t.is(resolvedUrl, '/fixtures/images/picture.png?foo=bar&baz&26d2d778b6000#hash');
+    }, t.fail);
+});
+
+test('query + hash w/ custom cachebuster w/ falsy result', function (t) {
+  return resolveUrl('fixtures/images/picture.png?foo=bar&baz#hash', {
+    cachebuster: function () { return; }
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '/fixtures/images/picture.png?foo=bar&baz#hash');
+    }, t.fail);
+});
+
+test('query + hash w/ custom cachebuster w/ string result', function (t) {
+  return resolveUrl('fixtures/images/picture.png?foo=bar&baz#hash', {
+    cachebuster: function () { return 'bust'; }
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '/fixtures/images/picture.png?foo=bar&baz&bust#hash');
+    }, t.fail);
+});
+
+test('query + hash w/ custom cachebuster w/ pathname', function (t) {
+  return resolveUrl('fixtures/images/picture.png?foo=bar&baz#hash', {
+    cachebuster: function () { return { pathname: '/foo.png' }; } // TODO leading slash
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '/foo.png?foo=bar&baz#hash');
+    }, t.fail);
+});
+
+test('query + hash w/ custom cachebuster w/ query', function (t) {
+  return resolveUrl('fixtures/images/picture.png?foo=bar&baz#hash', {
+    cachebuster: function () { return { query: 'bust' }; }
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '/fixtures/images/picture.png?foo=bar&baz&bust#hash');
+    }, t.fail);
+});
+
+test('query + hash w/ custom cachebuster w/ pathname + query', function (t) {
+  return resolveUrl('fixtures/images/picture.png?foo=bar&baz#hash', {
+    cachebuster: function () { return { pathname: '/foo.png', query: 'bust' }; } // TODO leading slash
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '/foo.png?foo=bar&baz&bust#hash');
     }, t.fail);
 });
 
