@@ -77,6 +77,16 @@ test('basePath + currentPath + loadPaths', function (t) {
     }, t.fail);
 });
 
+test('absolute needle + basePath', function (t) {
+  var absoluteTo = path.resolve('fixtures/duplicate-1.jpg');
+  return resolvePath(absoluteTo, {
+    basePath: 'fixtures'
+  })
+    .then(function (resolvedPath) {
+      t.is(resolvedPath, path.resolve('fixtures/duplicate-1.jpg'));
+    }, t.fail);
+});
+
 test('absolute basePath + currentPath', function (t) {
   return resolvePath('knitwork.gif', {
     basePath: path.resolve('fixtures'),
