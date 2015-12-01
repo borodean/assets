@@ -2,37 +2,38 @@ var path = require('path');
 var resolvePath = require('../lib/path');
 var test = require('ava');
 
-test('no options', function (t) {
-  return resolvePath('fixtures/images/picture.png').then(function (resolvedPath) {
-    t.is(resolvedPath, path.resolve('fixtures/images/picture.png'));
-  }, t.fail);
+test('w/o options', function (t) {
+  return resolvePath('fixtures/duplicate-1.jpg')
+    .then(function (resolvedPath) {
+      t.is(resolvedPath, path.resolve('fixtures/duplicate-1.jpg'));
+    }, t.fail);
 });
 
 test('basePath', function (t) {
+  return resolvePath('duplicate-1.jpg', {
+    basePath: 'fixtures'
+  })
+    .then(function (resolvedPath) {
+      t.is(resolvedPath, path.resolve('fixtures/duplicate-1.jpg'));
+    }, t.fail);
+});
+
+test('loadPaths', function (t) {
   return resolvePath('picture.png', {
-    basePath: 'fixtures/images'
+    loadPaths: ['fixtures/fonts', 'fixtures/images']
   })
     .then(function (resolvedPath) {
       t.is(resolvedPath, path.resolve('fixtures/images/picture.png'));
     }, t.fail);
 });
 
-test('loadPaths', function (t) {
-  return resolvePath('empty-sans.woff', {
-    loadPaths: ['fixtures/fonts', 'fixtures/images']
-  })
-    .then(function (resolvedPath) {
-      t.is(resolvedPath, path.resolve('fixtures/fonts/empty-sans.woff'));
-    }, t.fail);
-});
-
 test('basePath + loadPaths', function (t) {
-  return resolvePath('empty-sans.woff', {
+  return resolvePath('picture.png', {
     basePath: 'fixtures',
     loadPaths: ['fonts', 'images']
   })
     .then(function (resolvedPath) {
-      t.is(resolvedPath, path.resolve('fixtures/fonts/empty-sans.woff'));
+      t.is(resolvedPath, path.resolve('fixtures/images/picture.png'));
     }, t.fail);
 });
 
@@ -44,7 +45,7 @@ test('non-existing file', function (t) {
     });
 });
 
-test('prioritizes basePath over the loadPaths', function (t) {
+test('prioritize basePath over the loadPaths', function (t) {
   return resolvePath('duplicate-1.jpg', {
     basePath: 'fixtures',
     loadPaths: ['fonts', 'images']
@@ -54,7 +55,7 @@ test('prioritizes basePath over the loadPaths', function (t) {
     }, t.fail);
 });
 
-test('prioritizes firsts loadPaths over the lasts', function (t) {
+test('prioritize firsts loadPaths over the lasts', function (t) {
   return resolvePath('duplicate-2.txt', {
     basePath: 'fixtures',
     loadPaths: ['fonts', 'images']
@@ -64,22 +65,29 @@ test('prioritizes firsts loadPaths over the lasts', function (t) {
     }, t.fail);
 });
 
-test('node-style callback', function (t) {
-  t.plan(5);
-
-  resolvePath('fixtures/images/picture.png', function (err, resolvedPath) {
-    t.is(resolvedPath, path.resolve('fixtures/images/picture.png'));
+test('node-style callback w/ options', function (t) {
+  resolvePath('fixtures/duplicate-1.jpg', function (err, resolvedPath) {
+    t.is(err, null);
+    t.is(resolvedPath, path.resolve('fixtures/duplicate-1.jpg'));
+    t.end();
   });
+});
 
+test('node-style callback w/o options', function (t) {
+  resolvePath('duplicate-1.jpg', {
+    basePath: 'fixtures'
+  }, function (err, resolvedPath) {
+    t.is(err, null);
+    t.is(resolvedPath, path.resolve('fixtures/duplicate-1.jpg'));
+    t.end();
+  });
+});
+
+test('node-style callback + non-existing file', function (t) {
   resolvePath('non-existing.gif', function (err, resolvedPath) {
     t.ok(err instanceof Error);
     t.is(err.message, 'Asset not found or unreadable: non-existing.gif');
     t.is(resolvedPath, undefined);
-  });
-
-  resolvePath('picture.png', {
-    basePath: 'fixtures/images'
-  }, function (err, resolvedPath) {
-    t.is(resolvedPath, path.resolve('fixtures/images/picture.png'));
+    t.end();
   });
 });

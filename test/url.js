@@ -1,14 +1,22 @@
 var fs = require('fs');
 var path = require('path');
 var resolveUrl = require('../lib/url');
+var sinon = require('sinon');
 var test = require('ava');
 
-function mtime(filePath, mtime) {
-  var atime = fs.statSync(filePath).atime;
-  fs.utimesSync(filePath, atime, mtime);
-}
+test.before(function (t) {
+  sinon.stub(fs, 'statSync').returns({
+    mtime: new Date(Date.UTC(1991, 7, 24))
+  });
+  t.end();
+});
 
-test('no options', function (t) {
+test.after(function (t) {
+  fs.statSync.restore();
+  t.end();
+});
+
+test('w/o options', function (t) {
   return resolveUrl('fixtures/duplicate-1.jpg')
     .then(function (resolvedUrl) {
       t.is(resolvedUrl, '/fixtures/duplicate-1.jpg');
@@ -174,35 +182,34 @@ test('baseUrl w/ trailing slash', function (t) {
 });
 
 test('default cachebuster', function (t) {
-  mtime('fixtures/images/picture.png', Date.UTC(1991, 7, 24));
-  return resolveUrl('fixtures/images/picture.png', {
+  return resolveUrl('fixtures/duplicate-1.jpg', {
     cachebuster: true
   })
     .then(function (resolvedUrl) {
-      t.is(resolvedUrl, '/fixtures/images/picture.png?26d2d778b6000');
+      t.is(resolvedUrl, '/fixtures/duplicate-1.jpg?9f057edc00');
     }, t.fail);
 });
 
 test('custom cachebuster w/ falsy result', function (t) {
-  return resolveUrl('fixtures/images/picture.png', {
+  return resolveUrl('fixtures/duplicate-1.jpg', {
     cachebuster: function () { return; }
   })
     .then(function (resolvedUrl) {
-      t.is(resolvedUrl, '/fixtures/images/picture.png');
+      t.is(resolvedUrl, '/fixtures/duplicate-1.jpg');
     }, t.fail);
 });
 
 test('custom cachebuster w/ string result', function (t) {
-  return resolveUrl('fixtures/images/picture.png', {
+  return resolveUrl('fixtures/duplicate-1.jpg', {
     cachebuster: function () { return 'bust'; }
   })
     .then(function (resolvedUrl) {
-      t.is(resolvedUrl, '/fixtures/images/picture.png?bust');
+      t.is(resolvedUrl, '/fixtures/duplicate-1.jpg?bust');
     }, t.fail);
 });
 
 test('custom cachebuster w/ pathname', function (t) {
-  return resolveUrl('fixtures/images/picture.png', {
+  return resolveUrl('fixtures/duplicate-1.jpg', {
     cachebuster: function () { return { pathname: '/foo.png' }; } // TODO leading slash
   })
     .then(function (resolvedUrl) {
@@ -211,16 +218,16 @@ test('custom cachebuster w/ pathname', function (t) {
 });
 
 test('custom cachebuster w/ query', function (t) {
-  return resolveUrl('fixtures/images/picture.png', {
+  return resolveUrl('fixtures/duplicate-1.jpg', {
     cachebuster: function () { return { query: 'bust' }; }
   })
     .then(function (resolvedUrl) {
-      t.is(resolvedUrl, '/fixtures/images/picture.png?bust');
+      t.is(resolvedUrl, '/fixtures/duplicate-1.jpg?bust');
     }, t.fail);
 });
 
 test('custom cachebuster w/ pathname + query', function (t) {
-  return resolveUrl('fixtures/images/picture.png', {
+  return resolveUrl('fixtures/duplicate-1.jpg', {
     cachebuster: function () { return { pathname: '/foo.png', query: 'bust' }; } // TODO leading slash
   })
     .then(function (resolvedUrl) {
@@ -229,17 +236,17 @@ test('custom cachebuster w/ pathname + query', function (t) {
 });
 
 test('custom cachebuster arguments', function (t) {
-  resolveUrl('images/picture.png', {
+  var cachebuster = sinon.spy();
+  return resolveUrl('duplicate-1.jpg', {
     basePath: 'fixtures',
-    cachebuster: function (resolvedPath, resolvedUrlPathname) {
-      t.is(resolvedPath, path.resolve('fixtures/images/picture.png'));
-      t.is(resolvedUrlPathname, path.resolve('/images/picture.png'));
-      t.end();
-    }
-  }).catch(function () {
-    t.fail();
-    t.end();
-  });
+    cachebuster: cachebuster
+  })
+    .then(function () {
+      t.ok(cachebuster.calledOnce);
+      t.is(cachebuster.lastCall.args.length, 2);
+      t.is(cachebuster.lastCall.args[0], path.resolve('fixtures/duplicate-1.jpg'));
+      t.is(cachebuster.lastCall.args[1], path.resolve('/duplicate-1.jpg'));
+    }, t.fail);
 });
 
 test('query + hash', function (t) {
@@ -250,12 +257,11 @@ test('query + hash', function (t) {
 });
 
 test('query + hash w/ default cachebuster', function (t) {
-  mtime('fixtures/images/picture.png', Date.UTC(1991, 7, 24));
   return resolveUrl('fixtures/images/picture.png?foo=bar&baz#hash', {
     cachebuster: true
   })
     .then(function (resolvedUrl) {
-      t.is(resolvedUrl, '/fixtures/images/picture.png?foo=bar&baz&26d2d778b6000#hash');
+      t.is(resolvedUrl, '/fixtures/images/picture.png?foo=bar&baz&9f057edc00#hash');
     }, t.fail);
 });
 
@@ -313,22 +319,29 @@ test('query + hash w/ relativeTo', function (t) {
     }, t.fail);
 });
 
-test('node-style callback', function (t) {
-  t.plan(5);
-
-  resolveUrl('fixtures/images/picture.png', function (err, resolvedUrl) {
-    t.is(resolvedUrl, '/fixtures/images/picture.png');
+test('node-style callback w/o options', function (t) {
+  resolveUrl('fixtures/duplicate-1.jpg', function (err, resolvedUrl) {
+    t.is(err, null);
+    t.is(resolvedUrl, '/fixtures/duplicate-1.jpg');
+    t.end();
   });
+});
 
+test('node-style callback w/ options', function (t) {
+  resolveUrl('duplicate-1.jpg', {
+    basePath: 'fixtures'
+  }, function (err, resolvedUrl) {
+    t.is(err, null);
+    t.is(resolvedUrl, '/duplicate-1.jpg');
+    t.end();
+  });
+});
+
+test('node-style callback + non-existing file', function (t) {
   resolveUrl('non-existing.gif', function (err, resolvedUrl) {
     t.ok(err instanceof Error);
     t.is(err.message, 'Asset not found or unreadable: non-existing.gif');
     t.is(resolvedUrl, undefined);
-  });
-
-  resolveUrl('picture.png', {
-    basePath: 'fixtures/images'
-  }, function (err, resolvedUrl) {
-    t.is(resolvedUrl, '/picture.png');
+    t.end();
   });
 });
