@@ -5,6 +5,7 @@ test('w/o options', function (t) {
   return resolveData('fixtures/duplicate-1.jpg')
     .then(function (resolvedDataUrl) {
       t.is(resolvedDataUrl.slice(0, 32), 'data:image/jpeg;base64,/9j/4AAQS');
+      t.is(resolvedDataUrl.slice(-32), 'GWbO3rSpUIsvhA1vsPh/WlSpVprP/9k=');
     }, t.fail);
 });
 
@@ -15,6 +16,7 @@ test('basePath + loadPaths', function (t) {
   })
     .then(function (resolvedDataUrl) {
       t.is(resolvedDataUrl.slice(0, 32), 'data:image/png;base64,iVBORw0KGg');
+      t.is(resolvedDataUrl.slice(-32), '+BPCufaJraBKlQAAAABJRU5ErkJggg==');
     }, t.fail);
 });
 
