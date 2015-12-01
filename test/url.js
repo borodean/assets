@@ -41,6 +41,15 @@ test('baseUrl', function (t) {
     }, t.fail);
 });
 
+test('currentPath', function (t) {
+  return resolveUrl('knitwork.gif', {
+    currentPath: 'fixtures/patterns'
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '/fixtures/patterns/knitwork.gif');
+    }, t.fail);
+});
+
 test('loadPaths', function (t) {
   return resolveUrl('picture.png', {
     loadPaths: ['fixtures/fonts', 'fixtures/images']
@@ -69,6 +78,16 @@ test('basePath + baseUrl', function (t) {
     }, t.fail);
 });
 
+test('basePath + currentPath', function (t) {
+  return resolveUrl('knitwork.gif', {
+    basePath: 'fixtures',
+    currentPath: 'patterns'
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '/patterns/knitwork.gif');
+    }, t.fail);
+});
+
 test('basePath + loadPaths', function (t) {
   return resolveUrl('picture.png', {
     basePath: 'fixtures',
@@ -86,6 +105,16 @@ test('basePath + relativeTo', function (t) {
   })
     .then(function (resolvedUrl) {
       t.is(resolvedUrl, '../images/picture.png');
+    }, t.fail);
+});
+
+test('baseUrl + currentPath', function (t) {
+  return resolveUrl('knitwork.gif', {
+    baseUrl: 'http://example.com/wp-content/themes',
+    currentPath: 'fixtures/patterns'
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, 'http://example.com/wp-content/themes/fixtures/patterns/knitwork.gif');
     }, t.fail);
 });
 
@@ -109,6 +138,26 @@ test('baseUrl + relativeTo', function (t) {
     }, t.fail);
 });
 
+test('currentPath + loadPaths', function (t) {
+  return resolveUrl('knitwork.gif', {
+    currentPath: 'fixtures/patterns',
+    loadPaths: ['fixtures/fonts', 'fixtures/images']
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '/fixtures/patterns/knitwork.gif');
+    }, t.fail);
+});
+
+test('currentPath + relativeTo', function (t) {
+  return resolveUrl('knitwork.gif', {
+    currentPath: 'fixtures/patterns',
+    relativeTo: 'fixtures/fonts'
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '../patterns/knitwork.gif');
+    }, t.fail);
+});
+
 test('loadPaths + relativeTo', function (t) {
   return resolveUrl('picture.png', {
     loadPaths: ['fixtures/fonts', 'fixtures/images'],
@@ -116,6 +165,17 @@ test('loadPaths + relativeTo', function (t) {
   })
     .then(function (resolvedUrl) {
       t.is(resolvedUrl, '../images/picture.png');
+    }, t.fail);
+});
+
+test('basePath + baseUrl + currentPath', function (t) {
+  return resolveUrl('knitwork.gif', {
+    basePath: 'fixtures',
+    baseUrl: 'http://example.com/wp-content/themes',
+    currentPath: 'patterns'
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, 'http://example.com/wp-content/themes/patterns/knitwork.gif');
     }, t.fail);
 });
 
@@ -141,6 +201,28 @@ test('basePath + baseUrl + relativeTo', function (t) {
     }, t.fail);
 });
 
+test('basePath + currentPath + loadPaths', function (t) {
+  return resolveUrl('knitwork.gif', {
+    basePath: 'fixtures',
+    currentPath: 'patterns',
+    loadPaths: ['fonts', 'images']
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '/patterns/knitwork.gif');
+    }, t.fail);
+});
+
+test('basePath + currentPath + relativeTo', function (t) {
+  return resolveUrl('knitwork.gif', {
+    basePath: 'fixtures',
+    currentPath: 'patterns',
+    relativeTo: 'fonts'
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '../patterns/knitwork.gif');
+    }, t.fail);
+});
+
 test('basePath + loadPaths + relativeTo', function (t) {
   return resolveUrl('picture.png', {
     basePath: 'fixtures',
@@ -149,6 +231,28 @@ test('basePath + loadPaths + relativeTo', function (t) {
   })
     .then(function (resolvedUrl) {
       t.is(resolvedUrl, '../images/picture.png');
+    }, t.fail);
+});
+
+test('baseUrl + currentPath + loadPaths', function (t) {
+  return resolveUrl('knitwork.gif', {
+    baseUrl: 'http://example.com/wp-content/themes',
+    currentPath: 'fixtures/patterns',
+    loadPaths: ['fixtures/fonts', 'fixtures/images']
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, 'http://example.com/wp-content/themes/fixtures/patterns/knitwork.gif');
+    }, t.fail);
+});
+
+test('baseUrl + currentPath + relativeTo', function (t) {
+  return resolveUrl('knitwork.gif', {
+    baseUrl: 'http://example.com/wp-content/themes',
+    currentPath: 'fixtures/patterns',
+    relativeTo: 'fixtures/fonts'
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '../patterns/knitwork.gif');
     }, t.fail);
 });
 
@@ -163,6 +267,41 @@ test('baseUrl + loadPaths + relativeTo', function (t) {
     }, t.fail);
 });
 
+test('currentPath + loadPaths + relativeTo', function (t) {
+  return resolveUrl('knitwork.gif', {
+    currentPath: 'fixtures/patterns',
+    loadPaths: ['fixtures/fonts', 'fixtures/images'],
+    relativeTo: 'fixtures/fonts'
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '../patterns/knitwork.gif');
+    }, t.fail);
+});
+
+test('basePath + baseUrl + currentPath + loadPaths', function (t) {
+  return resolveUrl('knitwork.gif', {
+    basePath: 'fixtures',
+    baseUrl: 'http://example.com/wp-content/themes',
+    currentPath: 'patterns',
+    loadPaths: ['fonts', 'images']
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, 'http://example.com/wp-content/themes/patterns/knitwork.gif');
+    }, t.fail);
+});
+
+test('basePath + baseUrl + currentPath + relativeTo', function (t) {
+  return resolveUrl('knitwork.gif', {
+    basePath: 'fixtures',
+    baseUrl: 'http://example.com/wp-content/themes',
+    currentPath: 'patterns',
+    relativeTo: 'fonts'
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '../patterns/knitwork.gif');
+    }, t.fail);
+});
+
 test('basePath + baseUrl + loadPaths + relativeTo', function (t) {
   return resolveUrl('picture.png', {
     basePath: 'fixtures',
@@ -172,6 +311,31 @@ test('basePath + baseUrl + loadPaths + relativeTo', function (t) {
   })
     .then(function (resolvedUrl) {
       t.is(resolvedUrl, '../images/picture.png');
+    }, t.fail);
+});
+
+test('basePath + currentPath + loadPaths + relativeTo', function (t) {
+  return resolveUrl('knitwork.gif', {
+    basePath: 'fixtures',
+    currentPath: 'patterns',
+    loadPaths: ['fonts', 'images'],
+    relativeTo: 'fonts'
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '../patterns/knitwork.gif');
+    }, t.fail);
+});
+
+test('basePath + baseUrl + currentPath + loadPaths + relativeTo', function (t) {
+  return resolveUrl('knitwork.gif', {
+    basePath: 'fixtures',
+    baseUrl: 'http://example.com/wp-content/themes',
+    currentPath: 'patterns',
+    loadPaths: ['fonts', 'images'],
+    relativeTo: 'fonts'
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '../patterns/knitwork.gif');
     }, t.fail);
 });
 
