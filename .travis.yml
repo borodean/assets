@@ -13,3 +13,4 @@ addons:
     packages:
     - g++-4.8
     - libpoppler-cpp-dev
+after_success: npm run coveralls
