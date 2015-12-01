@@ -152,6 +152,17 @@ test('basePath + loadPaths + relativeTo', function (t) {
     }, t.fail);
 });
 
+test('baseUrl + loadPaths + relativeTo', function (t) {
+  return resolveUrl('picture.png', {
+    baseUrl: 'http://example.com/wp-content/themes',
+    loadPaths: ['fixtures/fonts', 'fixtures/images'],
+    relativeTo: 'fixtures/fonts'
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '../images/picture.png');
+    }, t.fail);
+});
+
 test('basePath + baseUrl + loadPaths + relativeTo', function (t) {
   return resolveUrl('picture.png', {
     basePath: 'fixtures',
