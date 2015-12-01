@@ -28,6 +28,14 @@ test('discard query + preserve hash', function (t) {
     }, t.fail);
 });
 
+test('svg', function (t) {
+  return resolveData('fixtures/images/vector.svg')
+    .then(function (resolvedDataUrl) {
+      t.is(resolvedDataUrl.slice(0, 32), 'data:image/svg+xml;charset=utf-8');
+      t.is(resolvedDataUrl.slice(-32), '0h80z%22%2F%3E%0D%0A%3C%2Fsvg%3E');
+    }, t.fail);
+});
+
 test('non-existing file', function (t) {
   return resolveData('non-existing.gif')
     .then(t.fail, function (err) {
