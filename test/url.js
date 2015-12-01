@@ -339,6 +339,16 @@ test('basePath + baseUrl + currentPath + loadPaths + relativeTo', function (t) {
     }, t.fail);
 });
 
+test('absolute basePath + relativeTo', function (t) {
+  return resolveUrl('images/picture.png', {
+    basePath: path.resolve('fixtures'),
+    relativeTo: path.resolve('fixtures/fonts')
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '../images/picture.png');
+    }, t.fail);
+});
+
 test('non-existing file', function (t) {
   return resolveUrl('non-existing.gif')
     .then(t.fail, function (err) {

@@ -77,6 +77,29 @@ test('basePath + currentPath + loadPaths', function (t) {
     }, t.fail);
 });
 
+test('absolute basePath + currentPath', function (t) {
+  return resolvePath('knitwork.gif', {
+    basePath: path.resolve('fixtures'),
+    currentPath: path.resolve('fixtures/patterns')
+  })
+    .then(function (resolvedPath) {
+      t.is(resolvedPath, path.resolve('fixtures/patterns/knitwork.gif'));
+    }, t.fail);
+});
+
+test('absolute basePath + loadPaths', function (t) {
+  return resolvePath('picture.png', {
+    basePath: path.resolve('fixtures'),
+    loadPaths: [
+      path.resolve('fixtures/fonts'),
+      path.resolve('fixtures/images')
+    ]
+  })
+    .then(function (resolvedPath) {
+      t.is(resolvedPath, path.resolve('fixtures/images/picture.png'));
+    }, t.fail);
+});
+
 test('non-existing file', function (t) {
   return resolvePath('non-existing.gif')
     .then(t.fail, function (err) {
