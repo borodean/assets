@@ -1,16 +1,7 @@
 sudo: false
 language: node_js
-env:
-  - CXX=g++-4.8
 node_js:
   - "stable"
   - "4"
   - "0.12"
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - g++-4.8
-    - libpoppler-cpp-dev
 after_success: npm run coveralls
