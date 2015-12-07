@@ -4,16 +4,14 @@ var resolveUrl = require('../lib/url');
 var sinon = require('sinon');
 var test = require('ava');
 
-test.before(function (t) {
+test.before(function () {
   sinon.stub(fs, 'statSync').returns({
     mtime: new Date(Date.UTC(1991, 7, 24))
   });
-  t.end();
 });
 
-test.after(function (t) {
+test.after(function () {
   fs.statSync.restore();
-  t.end();
 });
 
 test('w/o options', function (t) {
@@ -504,7 +502,7 @@ test('query + hash w/ relativeTo', function (t) {
     }, t.fail);
 });
 
-test('node-style callback w/o options', function (t) {
+test.cb('node-style callback w/o options', function (t) {
   resolveUrl('fixtures/duplicate-1.jpg', function (err, resolvedUrl) {
     t.is(err, null);
     t.is(resolvedUrl, '/fixtures/duplicate-1.jpg');
@@ -512,7 +510,7 @@ test('node-style callback w/o options', function (t) {
   });
 });
 
-test('node-style callback w/ options', function (t) {
+test.cb('node-style callback w/ options', function (t) {
   resolveUrl('duplicate-1.jpg', {
     basePath: 'fixtures'
   }, function (err, resolvedUrl) {
@@ -522,7 +520,7 @@ test('node-style callback w/ options', function (t) {
   });
 });
 
-test('node-style callback + non-existing file', function (t) {
+test.cb('node-style callback + non-existing file', function (t) {
   resolveUrl('non-existing.gif', function (err, resolvedUrl) {
     t.ok(err instanceof Error);
     t.is(err.message, 'Asset not found or unreadable: non-existing.gif');

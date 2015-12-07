@@ -44,7 +44,7 @@ test('non-existing file', function (t) {
     });
 });
 
-test('node-style callback w/o options', function (t) {
+test.cb('node-style callback w/o options', function (t) {
   resolveData('fixtures/duplicate-1.jpg', function (err, resolvedDataUrl) {
     t.is(err, null);
     t.is(resolvedDataUrl.slice(0, 32), 'data:image/jpeg;base64,/9j/4AAQS');
@@ -52,7 +52,7 @@ test('node-style callback w/o options', function (t) {
   });
 });
 
-test('node-style callback w/ options', function (t) {
+test.cb('node-style callback w/ options', function (t) {
   resolveData('picture.png', {
     basePath: 'fixtures',
     loadPaths: ['fonts', 'images']
@@ -63,7 +63,7 @@ test('node-style callback w/ options', function (t) {
   });
 });
 
-test('node-style callback + non-existing file', function (t) {
+test.cb('node-style callback + non-existing file', function (t) {
   resolveData('non-existing.gif', function (err, resolvedDataUrl) {
     t.ok(err instanceof Error);
     t.is(err.message, 'Asset not found or unreadable: non-existing.gif');

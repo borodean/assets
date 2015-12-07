@@ -43,14 +43,14 @@ test('invalid file', function (t) {
     });
 });
 
-test('node-style callback w/o options', function (t) {
+test.cb('node-style callback w/o options', function (t) {
   resolveSize('fixtures/duplicate-1.jpg', function (err, size) {
     t.same(size, { width: 200, height: 114 });
     t.end();
   });
 });
 
-test('node-style callback w/ options', function (t) {
+test.cb('node-style callback w/ options', function (t) {
   resolveSize('picture.png', {
     basePath: 'fixtures',
     loadPaths: ['fonts', 'images']
@@ -60,7 +60,7 @@ test('node-style callback w/ options', function (t) {
   });
 });
 
-test('node-style callback + non-existing file', function (t) {
+test.cb('node-style callback + non-existing file', function (t) {
   resolveSize('non-existing.gif', function (err, size) {
     t.ok(err instanceof Error);
     t.is(err.message, 'Asset not found or unreadable: non-existing.gif');
