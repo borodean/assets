@@ -4,7 +4,7 @@
   "main": "./lib",
   "scripts": {
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "test": "eslint --ignore-path .gitignore . && nyc --reporter=text --reporter=html ava"
+    "test": "eslint --ignore-path .gitignore . && nyc --reporter=text --reporter=html ./node_modules/ava/cli.js"
   },
   "dependencies": {
     "async": "^1.5.0",

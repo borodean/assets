@@ -428,7 +428,7 @@ test('custom cachebuster arguments', function (t) {
       t.ok(cachebuster.calledOnce);
       t.is(cachebuster.lastCall.args.length, 2);
       t.is(cachebuster.lastCall.args[0], path.resolve('fixtures/duplicate-1.jpg'));
-      t.is(cachebuster.lastCall.args[1], path.resolve('/duplicate-1.jpg'));
+      t.is(cachebuster.lastCall.args[1], '/duplicate-1.jpg');
     }, t.fail);
 });
 
