@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "async": "^1.5.0",
-    "bluebird": "^3.0.5",
+    "bluebird": "^3.0.6",
     "calipers": "^2.0.0",
     "calipers-gif": "^2.0.0",
     "calipers-jpeg": "^2.0.0",
@@ -21,8 +21,8 @@
   "devDependencies": {
     "ava": "^0.7.0",
     "coveralls": "^2.11.4",
-    "eslint": "^1.10.1",
-    "nyc": "^3.2.2",
+    "eslint": "^1.10.3",
+    "nyc": "^4.0.1",
     "sinon": "^1.17.2"
   }
 }
