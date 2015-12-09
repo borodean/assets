@@ -502,6 +502,13 @@ test('query + hash w/ relativeTo', function (t) {
     }, t.fail);
 });
 
+test('URI-encoded needle', function (t) {
+  return resolveUrl('fixtures/white%20space.txt')
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '/fixtures/white%20space.txt');
+    }, t.fail);
+});
+
 test.cb('node-style callback w/o options', function (t) {
   resolveUrl('fixtures/duplicate-1.jpg', function (err, resolvedUrl) {
     t.is(err, null);
