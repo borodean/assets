@@ -16,35 +16,35 @@ test.after(function () {
   Assets.url.restore();
 });
 
-test('Assets', function (t) {
+test('constructor', function (t) {
   t.same(typeof Assets, 'function', 'is a function');
   t.ok(Assets() instanceof Assets, 'instantiable without new');
   t.ok(Object.isFrozen(Assets()), 'is frozen');
 });
 
-test('Assets.options', function (t) {
+test('.options', function (t) {
   var options = { basePath: 'source' };
   t.same(Assets().options, {}, 'defaults to an empty object');
   t.same(Assets(options).options.basePath, 'source', 'is initiable');
   t.not(Assets(options).options, options, 'breaks the reference');
 });
 
-test('Assets.data()', function (t) {
+test('.data()', function (t) {
   Assets().data();
   t.ok(Assets.data.called);
 });
 
-test('Assets.path()', function (t) {
+test('.path()', function (t) {
   Assets().path();
   t.ok(Assets.path.called);
 });
 
-test('Assets.size()', function (t) {
+test('.size()', function (t) {
   Assets().size();
   t.ok(Assets.size.called);
 });
 
-test('Assets.url()', function (t) {
+test('.url()', function (t) {
   Assets().url();
   t.ok(Assets.url.called);
 });
