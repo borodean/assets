@@ -2,6 +2,8 @@
   "name": "assets",
   "version": "1.0.0",
   "main": "./lib",
+  "repository": "borodean/assets",
+  "author": "Vadym Borodin <borodean@gmail.com>",
   "scripts": {
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "test": "eslint --ignore-path .gitignore . && nyc --reporter=text --reporter=html ./node_modules/ava/cli.js"
