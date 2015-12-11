@@ -1,6 +1,15 @@
 {
   "name": "assets",
   "version": "1.0.0",
+  "description": "An asset manager for node",
+  "keywords": [
+    "assets",
+    "base64",
+    "image",
+    "path",
+    "size",
+    "url"
+  ],
   "main": "./lib",
   "repository": "borodean/assets",
   "author": "Vadym Borodin <borodean@gmail.com>",
