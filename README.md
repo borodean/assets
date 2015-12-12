@@ -1,4 +1,10 @@
-# Assets [![Unix Build Status][travis-badge]][travis] [![Windows Build Status][appveyor-badge]][appveyor] [![Coverage][coveralls-badge]][coveralls]
+<h1 align="center">
+  <img src="https://rawgit.com/assetsjs/assets/develop/media/logo.svg" alt="assets">
+</h1>
+
+Assets is an asset manager for node. It isolates assets from environmental changes, gets generates their URLs, retrieves image sizes and base64-encodes them.
+
+[![Unix Build Status][travis-badge]][travis] [![Windows Build Status][appveyor-badge]][appveyor] [![Coverage][coveralls-badge]][coveralls]
 
 [appveyor]:        https://ci.appveyor.com/project/borodean/assets
 [appveyor-badge]:  https://img.shields.io/appveyor/ci/borodean/assets.svg?label=windows
@@ -6,8 +12,6 @@
 [coveralls-badge]: https://img.shields.io/coveralls/borodean/assets.svg
 [travis]:          https://travis-ci.org/borodean/assets
 [travis-badge]:    https://img.shields.io/travis/borodean/assets.svg?label=unix
-
-Assets is an asset manager for node. It isolates assets from environmental changes, gets generates their URLs, retrieves image sizes and base64-encodes them.
 
 ## Installation
 
