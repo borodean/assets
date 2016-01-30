@@ -110,11 +110,6 @@ For example: `"/wp-content/themes/twentyfourteen"`, `"http://example.com"`.
 
 Defaults to `"/"`.
 
-### `currentPath`
-The path to the currently processed file.
-
-There is no default `currentPath`.
-
 ### `cachebuster`
 If cache should be busted. If set to `true`, Assets will bust assets cache, changing urls depending on asset’s modification date:
 
@@ -219,7 +214,6 @@ var resolver = new Assets({
 
 When resolving a path, Assets would look for it through every of the following paths in the listed order:
 
-* current path;
 * load paths;
 * base path.
 
