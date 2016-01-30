@@ -18,8 +18,8 @@
     "test": "eslint --ignore-path .gitignore . && nyc --reporter=text --reporter=html ./node_modules/ava/cli.js"
   },
   "dependencies": {
-    "async": "^1.5.0",
-    "bluebird": "^3.0.6",
+    "async": "^1.5.2",
+    "bluebird": "^3.1.5",
     "calipers": "^2.0.0",
     "calipers-gif": "^2.0.0",
     "calipers-jpeg": "^2.0.0",
@@ -27,14 +27,14 @@
     "calipers-svg": "^2.0.0",
     "calipers-webp": "^2.0.0",
     "glob": "^6.0.4",
-    "lodash": "^3.10.1",
+    "lodash": "^4.1.0",
     "mime": "^1.3.4"
   },
   "devDependencies": {
-    "ava": "^0.7.0",
-    "coveralls": "^2.11.4",
+    "ava": "^0.11.0",
+    "coveralls": "^2.11.6",
     "eslint": "^1.10.3",
-    "nyc": "^4.0.1",
-    "sinon": "^1.17.2"
+    "nyc": "^5.5.0",
+    "sinon": "^1.17.3"
   }
 }
