@@ -27,6 +27,15 @@ test('loadPaths', function (t) {
     }, t.fail);
 });
 
+test('loadPaths string', function (t) {
+  return resolvePath('picture.png', {
+    loadPaths: 'fixtures/images'
+  })
+    .then(function (resolvedPath) {
+      t.is(resolvedPath, path.resolve('fixtures/images/picture.png'));
+    }, t.fail);
+});
+
 test('basePath + loadPaths', function (t) {
   return resolvePath('picture.png', {
     basePath: 'fixtures',
