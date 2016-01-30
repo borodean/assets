@@ -36,6 +36,15 @@ test('loadPaths string', function (t) {
     }, t.fail);
 });
 
+test('loadPaths glob', function (t) {
+  return resolvePath('picture.png', {
+    loadPaths: 'fixtures/*'
+  })
+    .then(function (resolvedPath) {
+      t.is(resolvedPath, path.resolve('fixtures/images/picture.png'));
+    }, t.fail);
+});
+
 test('basePath + loadPaths', function (t) {
   return resolvePath('picture.png', {
     basePath: 'fixtures',
