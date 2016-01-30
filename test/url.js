@@ -391,6 +391,15 @@ test('custom cachebuster w/ string result', function (t) {
     }, t.fail);
 });
 
+test('custom cachebuster w/ number result', function (t) {
+  return resolveUrl('fixtures/duplicate-1.jpg', {
+    cachebuster: function () { return 42; }
+  })
+    .then(function (resolvedUrl) {
+      t.is(resolvedUrl, '/fixtures/duplicate-1.jpg?42');
+    }, t.fail);
+});
+
 test('custom cachebuster w/ pathname', function (t) {
   return resolveUrl('fixtures/duplicate-1.jpg', {
     cachebuster: function () { return { pathname: '/foo.png' }; } // TODO leading slash
