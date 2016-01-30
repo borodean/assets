@@ -18,31 +18,12 @@ test('basePath', function (t) {
     }, t.fail);
 });
 
-test('currentPath', function (t) {
-  return resolvePath('knitwork.gif', {
-    currentPath: 'fixtures/patterns'
-  })
-    .then(function (resolvedPath) {
-      t.is(resolvedPath, path.resolve('fixtures/patterns/knitwork.gif'));
-    }, t.fail);
-});
-
 test('loadPaths', function (t) {
   return resolvePath('picture.png', {
     loadPaths: ['fixtures/fonts', 'fixtures/images']
   })
     .then(function (resolvedPath) {
       t.is(resolvedPath, path.resolve('fixtures/images/picture.png'));
-    }, t.fail);
-});
-
-test('basePath + currentPath', function (t) {
-  return resolvePath('knitwork.gif', {
-    basePath: 'fixtures',
-    currentPath: 'patterns'
-  })
-    .then(function (resolvedPath) {
-      t.is(resolvedPath, path.resolve('fixtures/patterns/knitwork.gif'));
     }, t.fail);
 });
 
@@ -56,27 +37,6 @@ test('basePath + loadPaths', function (t) {
     }, t.fail);
 });
 
-test('currentPath + loadPaths', function (t) {
-  return resolvePath('knitwork.gif', {
-    currentPath: 'fixtures/patterns',
-    loadPaths: ['fixtures/fonts', 'fixtures/images']
-  })
-    .then(function (resolvedPath) {
-      t.is(resolvedPath, path.resolve('fixtures/patterns/knitwork.gif'));
-    }, t.fail);
-});
-
-test('basePath + currentPath + loadPaths', function (t) {
-  return resolvePath('knitwork.gif', {
-    basePath: 'fixtures',
-    currentPath: 'patterns',
-    loadPaths: ['fonts', 'images']
-  })
-    .then(function (resolvedPath) {
-      t.is(resolvedPath, path.resolve('fixtures/patterns/knitwork.gif'));
-    }, t.fail);
-});
-
 test('absolute needle + basePath', function (t) {
   var absoluteTo = path.resolve('fixtures/duplicate-1.jpg');
   return resolvePath(absoluteTo, {
@@ -84,16 +44,6 @@ test('absolute needle + basePath', function (t) {
   })
     .then(function (resolvedPath) {
       t.is(resolvedPath, path.resolve('fixtures/duplicate-1.jpg'));
-    }, t.fail);
-});
-
-test('absolute basePath + currentPath', function (t) {
-  return resolvePath('knitwork.gif', {
-    basePath: path.resolve('fixtures'),
-    currentPath: path.resolve('fixtures/patterns')
-  })
-    .then(function (resolvedPath) {
-      t.is(resolvedPath, path.resolve('fixtures/patterns/knitwork.gif'));
     }, t.fail);
 });
 
@@ -116,16 +66,6 @@ test('non-existing file', function (t) {
       t.ok(err instanceof Error);
       t.is(err.message, 'Asset not found or unreadable: non-existing.gif');
     });
-});
-
-test('prioritize currentPath over the basePath', function (t) {
-  return resolvePath('duplicate-1.jpg', {
-    basePath: 'fixtures',
-    currentPath: 'images'
-  })
-    .then(function (resolvedPath) {
-      t.is(resolvedPath, path.resolve('fixtures/images/duplicate-1.jpg'));
-    }, t.fail);
 });
 
 test('prioritize basePath over the loadPaths', function (t) {
