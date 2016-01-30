@@ -6,12 +6,12 @@ Assets is an asset manager for node. It isolates assets from environmental chang
 
 [![Unix Build Status][travis-badge]][travis] [![Windows Build Status][appveyor-badge]][appveyor] [![Coverage][coveralls-badge]][coveralls]
 
-[appveyor]:        https://ci.appveyor.com/project/borodean/assets
-[appveyor-badge]:  https://img.shields.io/appveyor/ci/borodean/assets.svg?label=windows
-[coveralls]:       https://coveralls.io/github/borodean/assets
-[coveralls-badge]: https://img.shields.io/coveralls/borodean/assets.svg
-[travis]:          https://travis-ci.org/borodean/assets
-[travis-badge]:    https://img.shields.io/travis/borodean/assets.svg?label=unix
+[appveyor]:        https://ci.appveyor.com/project/borodean/assets-xjoqs
+[appveyor-badge]:  https://img.shields.io/appveyor/ci/borodean/assets-xjoqs.svg?label=windows
+[coveralls]:       https://coveralls.io/github/assetsjs/assets
+[coveralls-badge]: https://img.shields.io/coveralls/assetsjs/assets.svg
+[travis]:          https://travis-ci.org/assetsjs/assets
+[travis-badge]:    https://img.shields.io/travis/assetsjs/assets.svg?label=unix
 
 ## Installation
 
