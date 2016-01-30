@@ -11,7 +11,7 @@
     "url"
   ],
   "main": "./lib",
-  "repository": "borodean/assets",
+  "repository": "assetsjs/assets",
   "author": "Vadym Borodin <borodean@gmail.com>",
   "scripts": {
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
