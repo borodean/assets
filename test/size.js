@@ -1,67 +1,64 @@
-var resolveSize = require('../lib/size');
-var path = require('path');
-var test = require('ava');
+import resolveSize from '../lib/size';
+import path from 'path';
+import test from 'ava';
 
-test('w/o options', function (t) {
-  return resolveSize('fixtures/duplicate-1.jpg')
-    .then(function (size) {
+test('w/o options', (t) =>
+  resolveSize('fixtures/duplicate-1.jpg')
+    .then((size) => {
       t.same(size, { width: 200, height: 114 });
-    }, t.fail);
-});
+    }, t.fail));
 
-test('basePath + loadPaths', function (t) {
-  return resolveSize('picture.png', {
+test('basePath + loadPaths', (t) =>
+  resolveSize('picture.png', {
     basePath: 'fixtures',
-    loadPaths: ['fonts', 'images']
+    loadPaths: ['fonts', 'images'],
   })
-    .then(function (size) {
+    .then((size) => {
       t.same(size, { width: 200, height: 57 });
-    }, t.fail);
-});
+    }, t.fail));
 
-test('non-existing file', function (t) {
-  return resolveSize('non-existing.gif')
-    .then(t.fail, function (err) {
+test('non-existing file', (t) =>
+  resolveSize('non-existing.gif')
+    .then(t.fail, (err) => {
       t.ok(err instanceof Error);
       t.is(err.message, 'Asset not found or unreadable: non-existing.gif');
-    });
-});
+    }));
 
-test('nonsupported file type', function (t) {
-  return resolveSize('fixtures/fonts/empty-sans.woff')
-    .then(t.fail, function (err) {
+test('nonsupported file type', (t) =>
+  resolveSize('fixtures/fonts/empty-sans.woff')
+    .then(t.fail, (err) => {
+      const absolutePath = path.resolve('fixtures/fonts/empty-sans.woff');
       t.ok(err instanceof Error);
-      t.is(err.message, 'File type not supported: ' + path.resolve('fixtures/fonts/empty-sans.woff'));
-    });
-});
+      t.is(err.message, `File type not supported: ${absolutePath}`);
+    }));
 
-test('invalid file', function (t) {
-  return resolveSize('fixtures/invalid.jpg')
-    .then(t.fail, function (err) {
+test('invalid file', (t) =>
+  resolveSize('fixtures/invalid.jpg')
+    .then(t.fail, (err) => {
+      const absolutePath = path.resolve('fixtures/invalid.jpg');
       t.ok(err instanceof Error);
-      t.is(err.message, 'Invalid JPEG file: ' + path.resolve('fixtures/invalid.jpg'));
-    });
-});
+      t.is(err.message, `Invalid JPEG file: ${absolutePath}`);
+    }));
 
-test.cb('node-style callback w/o options', function (t) {
-  resolveSize('fixtures/duplicate-1.jpg', function (err, size) {
+test.cb('node-style callback w/o options', (t) => {
+  resolveSize('fixtures/duplicate-1.jpg', (err, size) => {
     t.same(size, { width: 200, height: 114 });
     t.end();
   });
 });
 
-test.cb('node-style callback w/ options', function (t) {
+test.cb('node-style callback w/ options', (t) => {
   resolveSize('picture.png', {
     basePath: 'fixtures',
-    loadPaths: ['fonts', 'images']
-  }, function (err, size) {
+    loadPaths: ['fonts', 'images'],
+  }, (err, size) => {
     t.same(size, { width: 200, height: 57 });
     t.end();
   });
 });
 
-test.cb('node-style callback + non-existing file', function (t) {
-  resolveSize('non-existing.gif', function (err, size) {
+test.cb('node-style callback + non-existing file', (t) => {
+  resolveSize('non-existing.gif', (err, size) => {
     t.ok(err instanceof Error);
     t.is(err.message, 'Asset not found or unreadable: non-existing.gif');
     t.is(size, undefined);

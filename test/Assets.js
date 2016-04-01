@@ -1,50 +1,50 @@
-var Assets = require('..');
-var sinon = require('sinon');
-var test = require('ava');
+import Assets from '..';
+import sinon from 'sinon';
+import test from 'ava';
 
-test.before(function () {
+test.before(() => {
   sinon.stub(Assets, 'data');
   sinon.stub(Assets, 'path');
   sinon.stub(Assets, 'size');
   sinon.stub(Assets, 'url');
 });
 
-test.after(function () {
+test.after(() => {
   Assets.data.restore();
   Assets.path.restore();
   Assets.size.restore();
   Assets.url.restore();
 });
 
-test('constructor', function (t) {
+test('constructor', (t) => {
   t.same(typeof Assets, 'function', 'is a function');
   t.ok(Assets() instanceof Assets, 'instantiable without new');
   t.ok(Object.isFrozen(Assets()), 'is frozen');
 });
 
-test('.options', function (t) {
-  var options = { basePath: 'source' };
+test('.options', (t) => {
+  const options = { basePath: 'source' };
   t.same(Assets().options, {}, 'defaults to an empty object');
   t.same(Assets(options).options.basePath, 'source', 'is initiable');
   t.not(Assets(options).options, options, 'breaks the reference');
 });
 
-test('.data()', function (t) {
+test('.data()', (t) => {
   Assets().data();
   t.ok(Assets.data.called);
 });
 
-test('.path()', function (t) {
+test('.path()', (t) => {
   Assets().path();
   t.ok(Assets.path.called);
 });
 
-test('.size()', function (t) {
+test('.size()', (t) => {
   Assets().size();
   t.ok(Assets.size.called);
 });
 
-test('.url()', function (t) {
+test('.url()', (t) => {
   Assets().url();
   t.ok(Assets.url.called);
 });
