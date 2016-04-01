@@ -34,6 +34,7 @@
     "ava": "^0.13.0",
     "coveralls": "^2.11.6",
     "eslint": "^2.6.0",
+    "eslint-config-airbnb": "^6.2.0",
     "nyc": "^6.1.1",
     "sinon": "^1.17.3"
   }
