@@ -13,6 +13,7 @@
   "main": "./lib",
   "repository": "assetsjs/assets",
   "author": "Vadym Borodin <borodean@gmail.com>",
+  "license": "MIT",
   "scripts": {
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "test": "eslint --ignore-path .gitignore . && nyc --reporter=text --reporter=html ./node_modules/ava/cli.js"
