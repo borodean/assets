@@ -10,10 +10,11 @@
     "size",
     "url"
   ],
+  "bugs": "https://github.com/assetsjs/postcss-assets/issues",
+  "license": "MIT",
+  "author": "Vadym Borodin <borodean@gmail.com> (http://borodean.com)",
   "main": "./lib",
   "repository": "assetsjs/assets",
-  "license": "MIT",
-  "author": "Vadym Borodin <borodean@gmail.com>",
   "scripts": {
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "test": "eslint --ignore-path .gitignore . && nyc --reporter=text --reporter=html ./node_modules/ava/cli.js"
