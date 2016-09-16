@@ -12,6 +12,7 @@
   ],
   "main": "./lib",
   "repository": "assetsjs/assets",
+  "license": "MIT",
   "author": "Vadym Borodin <borodean@gmail.com>",
   "scripts": {
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
