@@ -75,7 +75,7 @@ test('absolute basePath + loadPaths', t =>
 test('non-existing file', t =>
   resolvePath('non-existing.gif')
     .then(t.fail, (err) => {
-      t.ok(err instanceof Error);
+      t.true(err instanceof Error);
       t.is(err.message, 'Asset not found or unreadable: non-existing.gif');
     }));
 
@@ -117,7 +117,7 @@ test.cb('node-style callback w/o options', (t) => {
 
 test.cb('node-style callback + non-existing file', (t) => {
   resolvePath('non-existing.gif', (err, resolvedPath) => {
-    t.ok(err instanceof Error);
+    t.true(err instanceof Error);
     t.is(err.message, 'Asset not found or unreadable: non-existing.gif');
     t.is(resolvedPath, undefined);
     t.end();

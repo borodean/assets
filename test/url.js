@@ -170,7 +170,7 @@ test('absolute basePath + relativeTo', t =>
 test('non-existing file', t =>
   resolveUrl('non-existing.gif')
     .then(t.fail, (err) => {
-      t.ok(err instanceof Error);
+      t.true(err instanceof Error);
       t.is(err.message, 'Asset not found or unreadable: non-existing.gif');
     }));
 
@@ -245,7 +245,7 @@ test('custom cachebuster arguments', (t) => {
     cachebuster,
   })
     .then(() => {
-      t.ok(cachebuster.calledOnce);
+      t.true(cachebuster.calledOnce);
       t.is(cachebuster.lastCall.args.length, 2);
       t.is(cachebuster.lastCall.args[0], path.resolve('fixtures/duplicate-1.jpg'));
       t.is(cachebuster.lastCall.args[1], '/duplicate-1.jpg');
@@ -340,7 +340,7 @@ test.cb('node-style callback w/ options', (t) => {
 
 test.cb('node-style callback + non-existing file', (t) => {
   resolveUrl('non-existing.gif', (err, resolvedUrl) => {
-    t.ok(err instanceof Error);
+    t.true(err instanceof Error);
     t.is(err.message, 'Asset not found or unreadable: non-existing.gif');
     t.is(resolvedUrl, undefined);
     t.end();
