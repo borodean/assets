@@ -11,7 +11,7 @@ Allows globs to be passed to `loadPaths`:
 var options = { loadPaths: ['assets/*'] };
 ```
 
-Also, `loadPaths` not understands a single string instead of an array:
+Also, `loadPaths` now also accepts a single string instead of an array:
 ```js
 var options = { loadPaths: 'images' };
 ```
