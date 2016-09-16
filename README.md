@@ -1,6 +1,4 @@
-<h1 align="center">
-  <img src="https://rawgit.com/assetsjs/assets/develop/media/logo.svg" alt="assets">
-</h1>
+# ![assets](https://rawgit.com/assetsjs/assets/develop/media/assets.svg)
 
 Assets is an asset manager for node. It isolates assets from environmental changes, gets generates their URLs, retrieves image sizes and base64-encodes them.
 
