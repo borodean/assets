@@ -1,14 +1,15 @@
-import resolveData from '../lib/data';
 import test from 'ava';
 
-test('w/o options', (t) =>
+import resolveData from '../lib/data';
+
+test('w/o options', t =>
   resolveData('fixtures/duplicate-1.jpg')
     .then((resolvedDataUrl) => {
       t.is(resolvedDataUrl.slice(0, 32), 'data:image/jpeg;base64,/9j/4AAQS');
       t.is(resolvedDataUrl.slice(-32), 'GWbO3rSpUIsvhA1vsPh/WlSpVprP/9k=');
     }, t.fail));
 
-test('basePath + loadPaths', (t) =>
+test('basePath + loadPaths', t =>
   resolveData('picture.png', {
     basePath: 'fixtures',
     loadPaths: ['fonts', 'images'],
@@ -18,21 +19,21 @@ test('basePath + loadPaths', (t) =>
       t.is(resolvedDataUrl.slice(-32), '+BPCufaJraBKlQAAAABJRU5ErkJggg==');
     }, t.fail));
 
-test('discard query + preserve hash', (t) =>
+test('discard query + preserve hash', t =>
   resolveData('fixtures/duplicate-1.jpg?foo=bar#hash')
     .then((resolvedDataUrl) => {
       t.is(resolvedDataUrl.slice(0, 32), 'data:image/jpeg;base64,/9j/4AAQS');
       t.is(resolvedDataUrl.slice(-32), 'rSpUIsvhA1vsPh/WlSpVprP/9k=#hash');
     }, t.fail));
 
-test('svg', (t) =>
+test('svg', t =>
   resolveData('fixtures/images/vector.svg')
     .then((resolvedDataUrl) => {
       t.is(resolvedDataUrl.slice(0, 32), 'data:image/svg+xml;charset=utf-8');
       t.is(resolvedDataUrl.slice(-32), '0h80z%22%2F%3E%0D%0A%3C%2Fsvg%3E');
     }, t.fail));
 
-test('non-existing file', (t) =>
+test('non-existing file', t =>
   resolveData('non-existing.gif')
     .then(t.fail, (err) => {
       t.ok(err instanceof Error);

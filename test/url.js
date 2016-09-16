@@ -1,8 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import resolveUrl from '../lib/url';
 import sinon from 'sinon';
 import test from 'ava';
+
+import resolveUrl from '../lib/url';
 
 test.before(() => {
   sinon.stub(fs, 'statSync').returns({
@@ -14,13 +15,13 @@ test.after(() => {
   fs.statSync.restore();
 });
 
-test('w/o options', (t) =>
+test('w/o options', t =>
   resolveUrl('fixtures/duplicate-1.jpg')
     .then((resolvedUrl) => {
       t.is(resolvedUrl, '/fixtures/duplicate-1.jpg');
     }, t.fail));
 
-test('basePath', (t) =>
+test('basePath', t =>
   resolveUrl('duplicate-1.jpg', {
     basePath: 'fixtures',
   })
@@ -28,7 +29,7 @@ test('basePath', (t) =>
       t.is(resolvedUrl, '/duplicate-1.jpg');
     }, t.fail));
 
-test('baseUrl', (t) =>
+test('baseUrl', t =>
   resolveUrl('fixtures/duplicate-1.jpg', {
     baseUrl: 'http://example.com/wp-content/themes',
   })
@@ -36,7 +37,7 @@ test('baseUrl', (t) =>
       t.is(resolvedUrl, 'http://example.com/wp-content/themes/fixtures/duplicate-1.jpg');
     }, t.fail));
 
-test('loadPaths', (t) =>
+test('loadPaths', t =>
   resolveUrl('picture.png', {
     loadPaths: ['fixtures/fonts', 'fixtures/images'],
   })
@@ -44,7 +45,7 @@ test('loadPaths', (t) =>
       t.is(resolvedUrl, '/fixtures/images/picture.png');
     }, t.fail));
 
-test('relativeTo', (t) =>
+test('relativeTo', t =>
   resolveUrl('fixtures/images/picture.png', {
     relativeTo: 'fixtures/fonts',
   })
@@ -52,7 +53,7 @@ test('relativeTo', (t) =>
       t.is(resolvedUrl, '../images/picture.png');
     }, t.fail));
 
-test('basePath + baseUrl', (t) =>
+test('basePath + baseUrl', t =>
   resolveUrl('duplicate-1.jpg', {
     basePath: 'fixtures',
     baseUrl: 'http://example.com/wp-content/themes',
@@ -61,7 +62,7 @@ test('basePath + baseUrl', (t) =>
       t.is(resolvedUrl, 'http://example.com/wp-content/themes/duplicate-1.jpg');
     }, t.fail));
 
-test('basePath + loadPaths', (t) =>
+test('basePath + loadPaths', t =>
   resolveUrl('picture.png', {
     basePath: 'fixtures',
     loadPaths: ['fonts', 'images'],
@@ -70,7 +71,7 @@ test('basePath + loadPaths', (t) =>
       t.is(resolvedUrl, '/images/picture.png');
     }, t.fail));
 
-test('basePath + relativeTo', (t) =>
+test('basePath + relativeTo', t =>
   resolveUrl('images/picture.png', {
     basePath: 'fixtures',
     relativeTo: 'fonts',
@@ -79,7 +80,7 @@ test('basePath + relativeTo', (t) =>
       t.is(resolvedUrl, '../images/picture.png');
     }, t.fail));
 
-test('baseUrl + loadPaths', (t) =>
+test('baseUrl + loadPaths', t =>
   resolveUrl('picture.png', {
     baseUrl: 'http://example.com/wp-content/themes',
     loadPaths: ['fixtures/fonts', 'fixtures/images'],
@@ -88,7 +89,7 @@ test('baseUrl + loadPaths', (t) =>
       t.is(resolvedUrl, 'http://example.com/wp-content/themes/fixtures/images/picture.png');
     }, t.fail));
 
-test('baseUrl + relativeTo', (t) =>
+test('baseUrl + relativeTo', t =>
   resolveUrl('fixtures/images/picture.png', {
     baseUrl: 'http://example.com/wp-content/themes',
     relativeTo: 'fixtures/fonts',
@@ -97,7 +98,7 @@ test('baseUrl + relativeTo', (t) =>
       t.is(resolvedUrl, '../images/picture.png');
     }, t.fail));
 
-test('loadPaths + relativeTo', (t) =>
+test('loadPaths + relativeTo', t =>
   resolveUrl('picture.png', {
     loadPaths: ['fixtures/fonts', 'fixtures/images'],
     relativeTo: 'fixtures/fonts',
@@ -106,7 +107,7 @@ test('loadPaths + relativeTo', (t) =>
       t.is(resolvedUrl, '../images/picture.png');
     }, t.fail));
 
-test('basePath + baseUrl + loadPaths', (t) =>
+test('basePath + baseUrl + loadPaths', t =>
   resolveUrl('picture.png', {
     basePath: 'fixtures',
     baseUrl: 'http://example.com/wp-content/themes',
@@ -116,7 +117,7 @@ test('basePath + baseUrl + loadPaths', (t) =>
       t.is(resolvedUrl, 'http://example.com/wp-content/themes/images/picture.png');
     }, t.fail));
 
-test('basePath + baseUrl + relativeTo', (t) =>
+test('basePath + baseUrl + relativeTo', t =>
   resolveUrl('images/picture.png', {
     basePath: 'fixtures',
     baseUrl: 'http://example.com/wp-content/themes',
@@ -126,7 +127,7 @@ test('basePath + baseUrl + relativeTo', (t) =>
       t.is(resolvedUrl, '../images/picture.png');
     }, t.fail));
 
-test('basePath + loadPaths + relativeTo', (t) =>
+test('basePath + loadPaths + relativeTo', t =>
   resolveUrl('picture.png', {
     basePath: 'fixtures',
     loadPaths: ['fonts', 'images'],
@@ -136,7 +137,7 @@ test('basePath + loadPaths + relativeTo', (t) =>
       t.is(resolvedUrl, '../images/picture.png');
     }, t.fail));
 
-test('baseUrl + loadPaths + relativeTo', (t) =>
+test('baseUrl + loadPaths + relativeTo', t =>
   resolveUrl('picture.png', {
     baseUrl: 'http://example.com/wp-content/themes',
     loadPaths: ['fixtures/fonts', 'fixtures/images'],
@@ -146,7 +147,7 @@ test('baseUrl + loadPaths + relativeTo', (t) =>
       t.is(resolvedUrl, '../images/picture.png');
     }, t.fail));
 
-test('basePath + baseUrl + loadPaths + relativeTo', (t) =>
+test('basePath + baseUrl + loadPaths + relativeTo', t =>
   resolveUrl('picture.png', {
     basePath: 'fixtures',
     baseUrl: 'http://example.com/wp-content/themes',
@@ -157,7 +158,7 @@ test('basePath + baseUrl + loadPaths + relativeTo', (t) =>
       t.is(resolvedUrl, '../images/picture.png');
     }, t.fail));
 
-test('absolute basePath + relativeTo', (t) =>
+test('absolute basePath + relativeTo', t =>
   resolveUrl('images/picture.png', {
     basePath: path.resolve('fixtures'),
     relativeTo: path.resolve('fixtures/fonts'),
@@ -166,14 +167,14 @@ test('absolute basePath + relativeTo', (t) =>
       t.is(resolvedUrl, '../images/picture.png');
     }, t.fail));
 
-test('non-existing file', (t) =>
+test('non-existing file', t =>
   resolveUrl('non-existing.gif')
     .then(t.fail, (err) => {
       t.ok(err instanceof Error);
       t.is(err.message, 'Asset not found or unreadable: non-existing.gif');
     }));
 
-test('baseUrl w/ trailing slash', (t) =>
+test('baseUrl w/ trailing slash', t =>
   resolveUrl('fixtures/images/picture.png', {
     baseUrl: 'http://example.com/wp-content/themes/',
   })
@@ -181,7 +182,7 @@ test('baseUrl w/ trailing slash', (t) =>
       t.is(resolvedUrl, ('http://example.com/wp-content/themes/fixtures/images/picture.png'));
     }, t.fail));
 
-test('default cachebuster', (t) =>
+test('default cachebuster', t =>
   resolveUrl('fixtures/duplicate-1.jpg', {
     cachebuster: true,
   })
@@ -189,7 +190,7 @@ test('default cachebuster', (t) =>
       t.is(resolvedUrl, '/fixtures/duplicate-1.jpg?9f057edc00');
     }, t.fail));
 
-test('custom cachebuster w/ falsy result', (t) =>
+test('custom cachebuster w/ falsy result', t =>
   resolveUrl('fixtures/duplicate-1.jpg', {
     cachebuster() { return; },
   })
@@ -197,7 +198,7 @@ test('custom cachebuster w/ falsy result', (t) =>
       t.is(resolvedUrl, '/fixtures/duplicate-1.jpg');
     }, t.fail));
 
-test('custom cachebuster w/ string result', (t) =>
+test('custom cachebuster w/ string result', t =>
   resolveUrl('fixtures/duplicate-1.jpg', {
     cachebuster() { return 'bust'; },
   })
@@ -205,7 +206,7 @@ test('custom cachebuster w/ string result', (t) =>
       t.is(resolvedUrl, '/fixtures/duplicate-1.jpg?bust');
     }, t.fail));
 
-test('custom cachebuster w/ number result', (t) =>
+test('custom cachebuster w/ number result', t =>
   resolveUrl('fixtures/duplicate-1.jpg', {
     cachebuster() { return 42; },
   })
@@ -213,7 +214,7 @@ test('custom cachebuster w/ number result', (t) =>
       t.is(resolvedUrl, '/fixtures/duplicate-1.jpg?42');
     }, t.fail));
 
-test('custom cachebuster w/ pathname', (t) =>
+test('custom cachebuster w/ pathname', t =>
   resolveUrl('fixtures/duplicate-1.jpg', {
     cachebuster() { return { pathname: '/foo.png' }; }, // TODO leading slash
   })
@@ -221,7 +222,7 @@ test('custom cachebuster w/ pathname', (t) =>
       t.is(resolvedUrl, '/foo.png');
     }, t.fail));
 
-test('custom cachebuster w/ query', (t) =>
+test('custom cachebuster w/ query', t =>
   resolveUrl('fixtures/duplicate-1.jpg', {
     cachebuster() { return { query: 'bust' }; },
   })
@@ -229,7 +230,7 @@ test('custom cachebuster w/ query', (t) =>
       t.is(resolvedUrl, '/fixtures/duplicate-1.jpg?bust');
     }, t.fail));
 
-test('custom cachebuster w/ pathname + query', (t) =>
+test('custom cachebuster w/ pathname + query', t =>
   resolveUrl('fixtures/duplicate-1.jpg', {
     cachebuster() { return { pathname: '/foo.png', query: 'bust' }; }, // TODO leading slash
   })
@@ -251,13 +252,13 @@ test('custom cachebuster arguments', (t) => {
     }, t.fail);
 });
 
-test('query + hash', (t) =>
+test('query + hash', t =>
   resolveUrl('fixtures/images/picture.png?foo=bar&baz#hash')
     .then((resolvedUrl) => {
       t.is(resolvedUrl, '/fixtures/images/picture.png?foo=bar&baz#hash');
     }, t.fail));
 
-test('query + hash w/ default cachebuster', (t) =>
+test('query + hash w/ default cachebuster', t =>
   resolveUrl('fixtures/images/picture.png?foo=bar&baz#hash', {
     cachebuster: true,
   })
@@ -265,7 +266,7 @@ test('query + hash w/ default cachebuster', (t) =>
       t.is(resolvedUrl, '/fixtures/images/picture.png?foo=bar&baz&9f057edc00#hash');
     }, t.fail));
 
-test('query + hash w/ custom cachebuster w/ falsy result', (t) =>
+test('query + hash w/ custom cachebuster w/ falsy result', t =>
   resolveUrl('fixtures/images/picture.png?foo=bar&baz#hash', {
     cachebuster() { return; },
   })
@@ -273,7 +274,7 @@ test('query + hash w/ custom cachebuster w/ falsy result', (t) =>
       t.is(resolvedUrl, '/fixtures/images/picture.png?foo=bar&baz#hash');
     }, t.fail));
 
-test('query + hash w/ custom cachebuster w/ string result', (t) =>
+test('query + hash w/ custom cachebuster w/ string result', t =>
   resolveUrl('fixtures/images/picture.png?foo=bar&baz#hash', {
     cachebuster() { return 'bust'; },
   })
@@ -281,7 +282,7 @@ test('query + hash w/ custom cachebuster w/ string result', (t) =>
       t.is(resolvedUrl, '/fixtures/images/picture.png?foo=bar&baz&bust#hash');
     }, t.fail));
 
-test('query + hash w/ custom cachebuster w/ pathname', (t) =>
+test('query + hash w/ custom cachebuster w/ pathname', t =>
   resolveUrl('fixtures/images/picture.png?foo=bar&baz#hash', {
     cachebuster() { return { pathname: '/foo.png' }; }, // TODO leading slash
   })
@@ -289,7 +290,7 @@ test('query + hash w/ custom cachebuster w/ pathname', (t) =>
       t.is(resolvedUrl, '/foo.png?foo=bar&baz#hash');
     }, t.fail));
 
-test('query + hash w/ custom cachebuster w/ query', (t) =>
+test('query + hash w/ custom cachebuster w/ query', t =>
   resolveUrl('fixtures/images/picture.png?foo=bar&baz#hash', {
     cachebuster() { return { query: 'bust' }; },
   })
@@ -297,7 +298,7 @@ test('query + hash w/ custom cachebuster w/ query', (t) =>
       t.is(resolvedUrl, '/fixtures/images/picture.png?foo=bar&baz&bust#hash');
     }, t.fail));
 
-test('query + hash w/ custom cachebuster w/ pathname + query', (t) =>
+test('query + hash w/ custom cachebuster w/ pathname + query', t =>
   resolveUrl('fixtures/images/picture.png?foo=bar&baz#hash', {
     cachebuster() { return { pathname: '/foo.png', query: 'bust' }; }, // TODO leading slash
   })
@@ -305,7 +306,7 @@ test('query + hash w/ custom cachebuster w/ pathname + query', (t) =>
       t.is(resolvedUrl, '/foo.png?foo=bar&baz&bust#hash');
     }, t.fail));
 
-test('query + hash w/ relativeTo', (t) =>
+test('query + hash w/ relativeTo', t =>
   resolveUrl('fixtures/images/picture.png?foo=bar&baz#hash', {
     relativeTo: 'fixtures/fonts',
   })
@@ -313,7 +314,7 @@ test('query + hash w/ relativeTo', (t) =>
       t.is(resolvedUrl, '../images/picture.png?foo=bar&baz#hash');
     }, t.fail));
 
-test('URI-encoded needle', (t) =>
+test('URI-encoded needle', t =>
   resolveUrl('fixtures/white%20space.txt')
     .then((resolvedUrl) => {
       t.is(resolvedUrl, '/fixtures/white%20space.txt');

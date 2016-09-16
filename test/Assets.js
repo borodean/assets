@@ -1,6 +1,7 @@
-import Assets from '..';
 import sinon from 'sinon';
 import test from 'ava';
+
+import Assets from '..';
 
 test.before(() => {
   sinon.stub(Assets, 'data');

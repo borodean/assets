@@ -1,14 +1,15 @@
 import path from 'path';
-import resolvePath from '../lib/path';
 import test from 'ava';
 
-test('w/o options', (t) =>
+import resolvePath from '../lib/path';
+
+test('w/o options', t =>
   resolvePath('fixtures/duplicate-1.jpg')
     .then((resolvedPath) => {
       t.is(resolvedPath, path.resolve('fixtures/duplicate-1.jpg'));
     }, t.fail));
 
-test('basePath', (t) =>
+test('basePath', t =>
   resolvePath('duplicate-1.jpg', {
     basePath: 'fixtures',
   })
@@ -16,7 +17,7 @@ test('basePath', (t) =>
       t.is(resolvedPath, path.resolve('fixtures/duplicate-1.jpg'));
     }, t.fail));
 
-test('loadPaths', (t) =>
+test('loadPaths', t =>
   resolvePath('picture.png', {
     loadPaths: ['fixtures/fonts', 'fixtures/images'],
   })
@@ -24,7 +25,7 @@ test('loadPaths', (t) =>
       t.is(resolvedPath, path.resolve('fixtures/images/picture.png'));
     }, t.fail));
 
-test('loadPaths string', (t) =>
+test('loadPaths string', t =>
   resolvePath('picture.png', {
     loadPaths: 'fixtures/images',
   })
@@ -32,7 +33,7 @@ test('loadPaths string', (t) =>
       t.is(resolvedPath, path.resolve('fixtures/images/picture.png'));
     }, t.fail));
 
-test('loadPaths glob', (t) =>
+test('loadPaths glob', t =>
   resolvePath('picture.png', {
     loadPaths: 'fixtures/*',
   })
@@ -40,7 +41,7 @@ test('loadPaths glob', (t) =>
       t.is(resolvedPath, path.resolve('fixtures/images/picture.png'));
     }, t.fail));
 
-test('basePath + loadPaths', (t) =>
+test('basePath + loadPaths', t =>
   resolvePath('picture.png', {
     basePath: 'fixtures',
     loadPaths: ['fonts', 'images'],
@@ -59,7 +60,7 @@ test('absolute needle + basePath', (t) => {
     }, t.fail);
 });
 
-test('absolute basePath + loadPaths', (t) =>
+test('absolute basePath + loadPaths', t =>
   resolvePath('picture.png', {
     basePath: path.resolve('fixtures'),
     loadPaths: [
@@ -71,14 +72,14 @@ test('absolute basePath + loadPaths', (t) =>
       t.is(resolvedPath, path.resolve('fixtures/images/picture.png'));
     }, t.fail));
 
-test('non-existing file', (t) =>
+test('non-existing file', t =>
   resolvePath('non-existing.gif')
     .then(t.fail, (err) => {
       t.ok(err instanceof Error);
       t.is(err.message, 'Asset not found or unreadable: non-existing.gif');
     }));
 
-test('prioritize basePath over the loadPaths', (t) =>
+test('prioritize basePath over the loadPaths', t =>
   resolvePath('duplicate-1.jpg', {
     basePath: 'fixtures',
     loadPaths: ['fonts', 'images'],
@@ -87,7 +88,7 @@ test('prioritize basePath over the loadPaths', (t) =>
       t.is(resolvedPath, path.resolve('fixtures/duplicate-1.jpg'));
     }, t.fail));
 
-test('prioritize firsts loadPaths over the lasts', (t) =>
+test('prioritize firsts loadPaths over the lasts', t =>
   resolvePath('duplicate-2.txt', {
     basePath: 'fixtures',
     loadPaths: ['fonts', 'images'],
