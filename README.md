@@ -68,7 +68,7 @@ resolver.url('page/background.jpg')
 ```
 
 ### `.data(path)`
-Returns a base64-encoded content of an asset. SVG files would be non-encoded, because then [they benefit in size](http://css-tricks.com/probably-dont-base64-svg/) (use the `forceBase64` option to override this behaviour).
+Returns a base64-encoded content of an asset. SVG files would be non-encoded, because then [they benefit in size](http://css-tricks.com/probably-dont-base64-svg/) (use the [`forceBase64`](#forcebase64) option to override this behaviour).
 
 ```js
 var resolver = new Assets();
@@ -156,8 +156,7 @@ var resolver = new Assets({
 Defaults to `false`.
 
 ### `forceBase64`
-
-Force the `data` method to encode _all_ assets using base64, including SVG files.
+Forces [`data(path)`](#datapath) to encode all assets using base64 - _including_ SVG files.
 
 Defaults to `false`.
 
