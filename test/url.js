@@ -192,7 +192,7 @@ test('default cachebuster', t =>
 
 test('custom cachebuster w/ falsy result', t =>
   resolveUrl('test/fixtures/duplicate-1.jpg', {
-    cachebuster() { return; },
+    cachebuster() {},
   })
     .then((resolvedUrl) => {
       t.is(resolvedUrl, '/test/fixtures/duplicate-1.jpg');
@@ -268,7 +268,7 @@ test('query + hash w/ default cachebuster', t =>
 
 test('query + hash w/ custom cachebuster w/ falsy result', t =>
   resolveUrl('test/fixtures/images/picture.png?foo=bar&baz#hash', {
-    cachebuster() { return; },
+    cachebuster() {},
   })
     .then((resolvedUrl) => {
       t.is(resolvedUrl, '/test/fixtures/images/picture.png?foo=bar&baz#hash');
