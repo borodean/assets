@@ -4,73 +4,73 @@ import test from 'ava';
 import resolvePath from '../lib/path';
 
 test('w/o options', t =>
-  resolvePath('fixtures/duplicate-1.jpg')
+  resolvePath('test/fixtures/duplicate-1.jpg')
     .then((resolvedPath) => {
-      t.is(resolvedPath, path.resolve('fixtures/duplicate-1.jpg'));
-    }, t.fail));
+      t.is(resolvedPath, path.resolve('test/fixtures/duplicate-1.jpg'));
+    }));
 
 test('basePath', t =>
   resolvePath('duplicate-1.jpg', {
-    basePath: 'fixtures',
+    basePath: 'test/fixtures',
   })
     .then((resolvedPath) => {
-      t.is(resolvedPath, path.resolve('fixtures/duplicate-1.jpg'));
-    }, t.fail));
+      t.is(resolvedPath, path.resolve('test/fixtures/duplicate-1.jpg'));
+    }));
 
 test('loadPaths', t =>
   resolvePath('picture.png', {
-    loadPaths: ['fixtures/fonts', 'fixtures/images'],
+    loadPaths: ['test/fixtures/fonts', 'test/fixtures/images'],
   })
     .then((resolvedPath) => {
-      t.is(resolvedPath, path.resolve('fixtures/images/picture.png'));
-    }, t.fail));
+      t.is(resolvedPath, path.resolve('test/fixtures/images/picture.png'));
+    }));
 
 test('loadPaths string', t =>
   resolvePath('picture.png', {
-    loadPaths: 'fixtures/images',
+    loadPaths: 'test/fixtures/images',
   })
     .then((resolvedPath) => {
-      t.is(resolvedPath, path.resolve('fixtures/images/picture.png'));
-    }, t.fail));
+      t.is(resolvedPath, path.resolve('test/fixtures/images/picture.png'));
+    }));
 
 test('loadPaths glob', t =>
   resolvePath('picture.png', {
-    loadPaths: 'fixtures/*',
+    loadPaths: 'test/fixtures/*',
   })
     .then((resolvedPath) => {
-      t.is(resolvedPath, path.resolve('fixtures/images/picture.png'));
-    }, t.fail));
+      t.is(resolvedPath, path.resolve('test/fixtures/images/picture.png'));
+    }));
 
 test('basePath + loadPaths', t =>
   resolvePath('picture.png', {
-    basePath: 'fixtures',
+    basePath: 'test/fixtures',
     loadPaths: ['fonts', 'images'],
   })
     .then((resolvedPath) => {
-      t.is(resolvedPath, path.resolve('fixtures/images/picture.png'));
-    }, t.fail));
+      t.is(resolvedPath, path.resolve('test/fixtures/images/picture.png'));
+    }));
 
 test('absolute needle + basePath', (t) => {
-  const absoluteTo = path.resolve('fixtures/duplicate-1.jpg');
+  const absoluteTo = path.resolve('test/fixtures/duplicate-1.jpg');
   return resolvePath(absoluteTo, {
-    basePath: 'fixtures',
+    basePath: 'test/fixtures',
   })
     .then((resolvedPath) => {
-      t.is(resolvedPath, path.resolve('fixtures/duplicate-1.jpg'));
+      t.is(resolvedPath, path.resolve('test/fixtures/duplicate-1.jpg'));
     }, t.fail);
 });
 
 test('absolute basePath + loadPaths', t =>
   resolvePath('picture.png', {
-    basePath: path.resolve('fixtures'),
+    basePath: path.resolve('test/fixtures'),
     loadPaths: [
-      path.resolve('fixtures/fonts'),
-      path.resolve('fixtures/images'),
+      path.resolve('test/fixtures/fonts'),
+      path.resolve('test/fixtures/images'),
     ],
   })
     .then((resolvedPath) => {
-      t.is(resolvedPath, path.resolve('fixtures/images/picture.png'));
-    }, t.fail));
+      t.is(resolvedPath, path.resolve('test/fixtures/images/picture.png'));
+    }));
 
 test('non-existing file', t =>
   resolvePath('non-existing.gif')
@@ -81,36 +81,36 @@ test('non-existing file', t =>
 
 test('prioritize basePath over the loadPaths', t =>
   resolvePath('duplicate-1.jpg', {
-    basePath: 'fixtures',
+    basePath: 'test/fixtures',
     loadPaths: ['fonts', 'images'],
   })
     .then((resolvedPath) => {
-      t.is(resolvedPath, path.resolve('fixtures/duplicate-1.jpg'));
-    }, t.fail));
+      t.is(resolvedPath, path.resolve('test/fixtures/duplicate-1.jpg'));
+    }));
 
 test('prioritize firsts loadPaths over the lasts', t =>
   resolvePath('duplicate-2.txt', {
-    basePath: 'fixtures',
+    basePath: 'test/fixtures',
     loadPaths: ['fonts', 'images'],
   })
     .then((resolvedPath) => {
-      t.is(resolvedPath, path.resolve('fixtures/fonts/duplicate-2.txt'));
-    }, t.fail));
+      t.is(resolvedPath, path.resolve('test/fixtures/fonts/duplicate-2.txt'));
+    }));
 
 test.cb('node-style callback w/ options', (t) => {
-  resolvePath('fixtures/duplicate-1.jpg', (err, resolvedPath) => {
+  resolvePath('test/fixtures/duplicate-1.jpg', (err, resolvedPath) => {
     t.is(err, null);
-    t.is(resolvedPath, path.resolve('fixtures/duplicate-1.jpg'));
+    t.is(resolvedPath, path.resolve('test/fixtures/duplicate-1.jpg'));
     t.end();
   });
 });
 
 test.cb('node-style callback w/o options', (t) => {
   resolvePath('duplicate-1.jpg', {
-    basePath: 'fixtures',
+    basePath: 'test/fixtures',
   }, (err, resolvedPath) => {
     t.is(err, null);
-    t.is(resolvedPath, path.resolve('fixtures/duplicate-1.jpg'));
+    t.is(resolvedPath, path.resolve('test/fixtures/duplicate-1.jpg'));
     t.end();
   });
 });
