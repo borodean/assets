@@ -169,6 +169,24 @@ For example: `"assets/css"`.
 
 Defaults to `false`.
 
+### `imagemin`
+Minify the inlined image by [imagemin](https://www.npmjs.com/package/imagemin), option value will transfer to [options of imagemin.buffer](https://www.npmjs.com/package/imagemin#options-1).
+
+For example:
+
+```
+{
+  plugins: [
+    require('imagemin-jpegtran')({
+      progressive: true,
+      arithmetic: true,
+    }),
+  ],
+}
+```
+
+Defaults to `null`
+
 Path resolution
 ---------------
 

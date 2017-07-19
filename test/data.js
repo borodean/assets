@@ -2,6 +2,8 @@ import test from 'ava';
 
 import resolveData from '../lib/data';
 
+import imageminJpegtran from 'imagemin-jpegtran';
+
 test('w/o options', t =>
   resolveData('fixtures/duplicate-1.jpg')
     .then((resolvedDataUrl) => {
@@ -67,3 +69,18 @@ test.cb('node-style callback + non-existing file', (t) => {
     t.end();
   });
 });
+
+test('minified inline', t =>
+  resolveData('fixtures/duplicate-1.jpg', {
+    imagemin: {
+      plugins: [
+        imageminJpegtran({
+          progressive: true,
+          arithmetic: true,
+        }),
+      ],
+    },
+  }).then((minifiedDataUrl) => resolveData('fixtures/duplicate-1.jpg')
+    .then((originDataUrl) => {
+      t.true(minifiedDataUrl.length < originDataUrl.length);
+    }), t.fail));
