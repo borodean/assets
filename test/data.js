@@ -2,7 +2,13 @@ import test from 'ava';
 
 import resolveData from '../lib/data';
 
-import imageminJpegtran from 'imagemin-jpegtran';
+const imageminJpegtran = (function (r) {
+  try {
+    return r('imagemin-jpegtran');
+  } catch (e) {
+    return null;
+  }
+}(require));
 
 test('w/o options', t =>
   resolveData('fixtures/duplicate-1.jpg')
@@ -70,17 +76,19 @@ test.cb('node-style callback + non-existing file', (t) => {
   });
 });
 
-test('minified inline', t =>
-  resolveData('fixtures/duplicate-1.jpg', {
-    imagemin: {
-      plugins: [
-        imageminJpegtran({
-          progressive: true,
-          arithmetic: true,
-        }),
-      ],
-    },
-  }).then((minifiedDataUrl) => resolveData('fixtures/duplicate-1.jpg')
-    .then((originDataUrl) => {
-      t.true(minifiedDataUrl.length < originDataUrl.length);
-    }), t.fail));
+if (imageminJpegtran != null) {
+  test('minified inline', t =>
+    resolveData('fixtures/duplicate-1.jpg', {
+      imagemin: {
+        plugins: [
+          imageminJpegtran({
+            progressive: true,
+            arithmetic: true,
+          }),
+        ],
+      },
+    }).then((minifiedDataUrl) => resolveData('fixtures/duplicate-1.jpg')
+      .then((originDataUrl) => {
+        t.true(minifiedDataUrl.length < originDataUrl.length);
+      }), t.fail));
+}
