@@ -3,35 +3,35 @@ import test from 'ava';
 import resolveData from '../lib/data';
 
 test('w/o options', t =>
-  resolveData('fixtures/duplicate-1.jpg')
+  resolveData('test/fixtures/duplicate-1.jpg')
     .then((resolvedDataUrl) => {
       t.is(resolvedDataUrl.slice(0, 32), 'data:image/jpeg;base64,/9j/4AAQS');
       t.is(resolvedDataUrl.slice(-32), 'GWbO3rSpUIsvhA1vsPh/WlSpVprP/9k=');
-    }, t.fail));
+    }));
 
 test('basePath + loadPaths', t =>
   resolveData('picture.png', {
-    basePath: 'fixtures',
+    basePath: 'test/fixtures',
     loadPaths: ['fonts', 'images'],
   })
     .then((resolvedDataUrl) => {
       t.is(resolvedDataUrl.slice(0, 32), 'data:image/png;base64,iVBORw0KGg');
       t.is(resolvedDataUrl.slice(-32), '+BPCufaJraBKlQAAAABJRU5ErkJggg==');
-    }, t.fail));
+    }));
 
 test('discard query + preserve hash', t =>
-  resolveData('fixtures/duplicate-1.jpg?foo=bar#hash')
+  resolveData('test/fixtures/duplicate-1.jpg?foo=bar#hash')
     .then((resolvedDataUrl) => {
       t.is(resolvedDataUrl.slice(0, 32), 'data:image/jpeg;base64,/9j/4AAQS');
       t.is(resolvedDataUrl.slice(-32), 'rSpUIsvhA1vsPh/WlSpVprP/9k=#hash');
-    }, t.fail));
+    }));
 
 test('svg', t =>
-  resolveData('fixtures/images/vector.svg')
+  resolveData('test/fixtures/images/vector.svg')
     .then((resolvedDataUrl) => {
       t.is(resolvedDataUrl.slice(0, 32), 'data:image/svg+xml;charset=utf-8');
       t.is(resolvedDataUrl.slice(-32), '0h80z%22%2F%3E%0D%0A%3C%2Fsvg%3E');
-    }, t.fail));
+    }));
 
 test('non-existing file', t =>
   resolveData('non-existing.gif')
@@ -41,7 +41,7 @@ test('non-existing file', t =>
     }));
 
 test.cb('node-style callback w/o options', (t) => {
-  resolveData('fixtures/duplicate-1.jpg', (err, resolvedDataUrl) => {
+  resolveData('test/fixtures/duplicate-1.jpg', (err, resolvedDataUrl) => {
     t.is(err, null);
     t.is(resolvedDataUrl.slice(0, 32), 'data:image/jpeg;base64,/9j/4AAQS');
     t.end();
@@ -50,7 +50,7 @@ test.cb('node-style callback w/o options', (t) => {
 
 test.cb('node-style callback w/ options', (t) => {
   resolveData('picture.png', {
-    basePath: 'fixtures',
+    basePath: 'test/fixtures',
     loadPaths: ['fonts', 'images'],
   }, (err, resolvedDataUrl) => {
     t.is(err, null);
