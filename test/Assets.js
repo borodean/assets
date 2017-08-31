@@ -1,50 +1,56 @@
-var Assets = require('..');
-var sinon = require('sinon');
-var test = require('ava');
+import sinon from 'sinon';
+import test from 'ava';
 
-test.before(function () {
+import Assets from '..';
+
+test.before(() => {
   sinon.stub(Assets, 'data');
   sinon.stub(Assets, 'path');
   sinon.stub(Assets, 'size');
   sinon.stub(Assets, 'url');
 });
 
-test.after(function () {
+test.after(() => {
   Assets.data.restore();
   Assets.path.restore();
   Assets.size.restore();
   Assets.url.restore();
 });
 
-test('constructor', function (t) {
-  t.same(typeof Assets, 'function', 'is a function');
-  t.ok(Assets() instanceof Assets, 'instantiable without new');
-  t.ok(Object.isFrozen(Assets()), 'is frozen');
+test('constructor', (t) => {
+  t.deepEqual(typeof Assets, 'function', 'is a function');
+  // eslint-disable-next-line new-cap
+  t.true(Assets() instanceof Assets, 'instantiable without new');
+  t.true(Object.isFrozen(new Assets()), 'is frozen');
 });
 
-test('.options', function (t) {
-  var options = { basePath: 'source' };
-  t.same(Assets().options, {}, 'defaults to an empty object');
-  t.same(Assets(options).options.basePath, 'source', 'is initiable');
-  t.not(Assets(options).options, options, 'breaks the reference');
+test('.options', (t) => {
+  const options = { basePath: 'source' };
+  t.deepEqual(new Assets().options, {}, 'defaults to an empty object');
+  t.deepEqual(new Assets(options).options.basePath, 'source', 'is initiable');
+  t.not(new Assets(options).options, options, 'breaks the reference');
 });
 
-test('.data()', function (t) {
-  Assets().data();
-  t.ok(Assets.data.called);
+test('.data()', (t) => {
+  const instance = new Assets();
+  instance.data();
+  t.true(Assets.data.called);
 });
 
-test('.path()', function (t) {
-  Assets().path();
-  t.ok(Assets.path.called);
+test('.path()', (t) => {
+  const instance = new Assets();
+  instance.path();
+  t.true(Assets.path.called);
 });
 
-test('.size()', function (t) {
-  Assets().size();
-  t.ok(Assets.size.called);
+test('.size()', (t) => {
+  const instance = new Assets();
+  instance.size();
+  t.true(Assets.size.called);
 });
 
-test('.url()', function (t) {
-  Assets().url();
-  t.ok(Assets.url.called);
+test('.url()', (t) => {
+  const instance = new Assets();
+  instance.url();
+  t.true(Assets.url.called);
 });
