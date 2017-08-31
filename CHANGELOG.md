@@ -1,5 +1,9 @@
 # Change log
 
+## 3.0.0
+
+Drop nodejs 0.12 support
+
 ## 2.1.1
 
 Updates package dependencies.
