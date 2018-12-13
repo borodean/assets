@@ -1,5 +1,10 @@
 # Change log
 
+## 3.0.1
+
+- Improve Yarn compatibility (https://github.com/borodean/assets/pull/8)
+- Updates the `engines` field of `package.json` to match the actually supported Node versions
+
 ## 3.0.0
 
 Drop nodejs 0.12 support
