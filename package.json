@@ -1,6 +1,6 @@
 {
   "name": "assets",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "An asset manager for node",
   "keywords": [
     "assets",
@@ -30,18 +30,18 @@
     "calipers-webp": "^2.0.0",
     "glob": "^7.0.6",
     "lodash": "^4.15.0",
-    "mime": "^1.4.0"
+    "mime": "^2.4.0"
   },
   "devDependencies": {
-    "ava": "^0.22.0",
-    "coveralls": "^2.11.13",
-    "eslint": "^4.5.0",
-    "eslint-config-airbnb-base": "^11.3.2",
+    "ava": "^0.25.0",
+    "coveralls": "^3.0.2",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.7.0",
-    "nyc": "^11.1.0",
-    "sinon": "^3.2.1"
+    "nyc": "^11.9.0",
+    "sinon": "^7.2.2"
   },
   "engines": {
-    "node": ">=0.12"
+    "node": ">=4"
   }
 }
