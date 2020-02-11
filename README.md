@@ -1,4 +1,4 @@
-# ![assets](https://rawgit.com/borodean/assets/develop/media/assets.svg)
+# ![assets](https://cdn.jsdelivr.net/gh/borodean/assets@master/media/assets.svg)
 
 Assets is an asset manager for node. It isolates assets from environmental changes, gets generates their URLs, retrieves image sizes and base64-encodes them.
 
