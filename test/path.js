@@ -1,7 +1,7 @@
-import path from 'path';
-import test from 'ava';
+const path = require('path');
+const test = require('ava');
 
-import resolvePath from '../lib/path';
+const resolvePath = require('../lib/path');
 
 test('w/o options', (t) => resolvePath('test/fixtures/duplicate-1.jpg')
   .then((resolvedPath) => {

@@ -1,6 +1,6 @@
-import test from 'ava';
+const test = require('ava');
 
-import resolveData from '../lib/data';
+const resolveData = require('../lib/data');
 
 test('w/o options', (t) => resolveData('test/fixtures/duplicate-1.jpg')
   .then((resolvedDataUrl) => {

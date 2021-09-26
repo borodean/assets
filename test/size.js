@@ -1,7 +1,7 @@
-import path from 'path';
-import test from 'ava';
+const path = require('path');
+const test = require('ava');
 
-import resolveSize from '../lib/size';
+const resolveSize = require('../lib/size');
 
 test('w/o options', (t) => resolveSize('test/fixtures/duplicate-1.jpg')
   .then((size) => {

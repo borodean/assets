@@ -1,7 +1,7 @@
-import sinon from 'sinon';
-import test from 'ava';
+const sinon = require('sinon');
+const test = require('ava');
 
-import Assets from '..';
+const Assets = require('..');
 
 test.before(() => {
   sinon.stub(Assets, 'data');

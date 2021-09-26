@@ -1,9 +1,9 @@
-import fs from 'fs';
-import path from 'path';
-import sinon from 'sinon';
-import test from 'ava';
+const fs = require('fs');
+const path = require('path');
+const sinon = require('sinon');
+const test = require('ava');
 
-import resolveUrl from '../lib/url';
+const resolveUrl = require('../lib/url');
 
 test.before(() => {
   sinon.stub(fs, 'statSync').returns({
