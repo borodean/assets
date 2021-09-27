@@ -328,34 +328,3 @@ test('URI-encoded needle', async () => {
     resolveUrl('__tests__/fixtures/white%20space.txt'),
   ).resolves.toBe('/__tests__/fixtures/white%20space.txt');
 });
-
-test('node-style callback w/o options', (done) => {
-  resolveUrl('__tests__/fixtures/duplicate-1.jpg', (err, resolvedUrl) => {
-    expect(err).toBeNull();
-    expect(resolvedUrl).toBe('/__tests__/fixtures/duplicate-1.jpg');
-    done();
-  });
-});
-
-test('node-style callback w/ options', (done) => {
-  resolveUrl(
-    'duplicate-1.jpg',
-    {
-      basePath: '__tests__/fixtures',
-    },
-    (err, resolvedUrl) => {
-      expect(err).toBeNull();
-      expect(resolvedUrl).toBe('/duplicate-1.jpg');
-      done();
-    },
-  );
-});
-
-test('node-style callback + non-existing file', (done) => {
-  resolveUrl('non-existing.gif', (err, resolvedUrl) => {
-    expect(err).toBeInstanceOf(Error);
-    expect(err.message).toBe('Asset not found or unreadable: non-existing.gif');
-    expect(resolvedUrl).toBeUndefined();
-    done();
-  });
-});

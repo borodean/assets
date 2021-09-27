@@ -35,14 +35,6 @@ resolver.path('foobar.jpg')
   });
 ```
 
-To use a node-style callback, pass it as the last argument to the resolving method:
-
-```js
-resolver.path('foobar.jpg', function (err, resolvedPath) {
-  // ...
-});
-```
-
 ## Resolving methods
 
 ### `.path(path)`
