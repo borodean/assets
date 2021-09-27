@@ -9,7 +9,6 @@ environment:
 install:
   - ps: Install-Product node $env:nodejs_version
   - set CI=true
-  - set AVA_APPVEYOR=true
   - npm install
 
 # Post-install test scripts

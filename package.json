@@ -16,8 +16,8 @@
   "main": "./lib",
   "repository": "assetsjs/assets",
   "scripts": {
-    "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "test": "eslint --ignore-path .gitignore . && nyc --reporter=text --reporter=html ./node_modules/ava/cli.js"
+    "coveralls": "jest && coveralls < coverage/lcov.info",
+    "test": "eslint --ignore-path .gitignore . && jest"
   },
   "dependencies": {
     "async": "^3.2.1",
@@ -33,13 +33,11 @@
     "mime": "^2.5.2"
   },
   "devDependencies": {
-    "ava": "^3.15.0",
     "coveralls": "^3.1.1",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.24.2",
-    "nyc": "^15.1.0",
-    "sinon": "^11.1.2"
+    "jest": "^27.2.2"
   },
   "engines": {
     "node": ">=4"
